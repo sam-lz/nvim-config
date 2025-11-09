@@ -1,5 +1,9 @@
 return {
     {
+        "sylvanfranklin/omni-preview.nvim",
+        opts = {}
+    },
+    {
         "norcalli/nvim-colorizer.lua",
     },
     {
