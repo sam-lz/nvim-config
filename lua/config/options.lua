@@ -1,0 +1,114 @@
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
+--
+--
+
+
+
+vim.o.winblend = 0
+vim.o.pumblend = 0
+
+vim.o.cursorline = true
+vim.o.cursorlineopt = "line"
+local grp = vim.api.nvim_create_augroup("CursorLineActiveOnly", { clear = true })
+vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+  group = grp,
+  callback = function() vim.wo.cursorline = true end,
+})
+vim.api.nvim_create_autocmd("WinLeave", {
+  group = grp,
+  callback = function() vim.wo.cursorline = false end,
+})
+
+
+-- vim.o.winborder = "rounded"
+-- vim.o.winblend = 10
+-- vim.o.scroll = 15
+-- vim.opt_global.scroll = 6
+
+vim.o.foldmethod = 'indent'
+vim.o.foldenable = false
+
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.splitbelow = true
+vim.o.splitright = true
+vim.o.wrap = false
+
+vim.o.expandtab = true
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
+
+-- synchronizes system clipboard
+vim.schedule(function()
+    vim.o.clipboard = "unnamedplus"
+end)
+
+vim.o.scrolloff = 999
+
+-- place cursor where there is no text
+vim.o.virtualedit = "block"
+
+vim.o.inccommand = "split"
+
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+vim.o.termguicolors = true
+
+vim.o.shortmess = "ltToOCFI"
+
+vim.o.mouse = 'a'
+
+vim.o.undofile = true
+
+vim.o.confirm = true
+
+vim.o.wrap = false
+
+vim.o.hlsearch = false
+vim.o.incsearch = true
+
+-- vim.o.updatetime = 50
+-- vim.o.colorcolumn = "80"
+
+vim.diagnostic.config({
+
+    -- virtual_lines = true,
+    virtual_text = true,
+
+})
+
+vim.o.conceallevel = 2
+
+vim.o.showmode = false
+
+
+vim.o.laststatus = 3
+-- vim.o.statusline = " %{%mode(1)%} %f%m %= %y %p%% %l:%c "
+-- vim.o.statusline = " %{%mode(1)%} %f%m %= %y %l:%c "
+--
+-- vim.o.statusline = " %f%m %= %y %l:%c "
+-- vim.o.statusline = " %f%m %= %{&ff} %y %l:%c "
+-- vim.o.statusline = " %f%m %= %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %y %l:%c "
+
+
+vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
+
+
+-- vim.o.statusline = " %f%{get(get(b:,'gitsigns_status_dict',{}),'head','')!=''?'  '.get(get(b:,'gitsigns_status_dict',{}),'head',''):''}%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
+
+
+
+
+
+
+
+
+
+
+
+
+
+
