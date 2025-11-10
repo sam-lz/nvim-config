@@ -202,13 +202,56 @@ vim.keymap.set("n", "<leader>t", function()
 end, { silent = true, noremap = true })
 
 
+-- workspace.nvim bindings
+-- switch workspaces
+-- km("n", "<leader>dw", function() require("telescope").extensions.workspaces.workspaces() end, {desc = "Workspace: switch"})
+vim.keymap.set("n", "<leader>d", function()
+  require("telescope").extensions.workspaces.workspaces()
+  vim.schedule(function() vim.cmd("stopinsert") end)  -- leave insert as soon as picker opens
+end, { desc = "Workspace: switch" })
+-- add current cwd as workspace
+km("n", "<leader>cA", function() require("workspaces").add(vim.fn.getcwd()) end, {desc = "Workspace: add CWD"})
+-- remove current workspace
+km("n", "<leader>cR", function() require("workspaces").remove() end, {desc = "Workspace: remove"})
+-- rename current workspace
+-- km("n", "<leader>dr", function() require("workspaces").rename() end, {desc = "Workspace: rename"})
 
-vim.keymap.set("n", "<leader>dc", ":cd ~/Library/Mobile\\ Documents/com~apple~CloudDocs/Coding <BAR> Yazi cwd<CR>", {desc = "Coding"})
-vim.keymap.set("n", "<leader>dl", ":cd ~/Documents <BAR> Yazi cwd<CR>",                                             {desc = "Local Documents"})
-vim.keymap.set("n", "<leader>dn", ":cd ~/Library/Mobile\\ Documents/com~apple~CloudDocs/Notes <BAR> Yazi cwd<CR>",  {desc = "Notes"})
-vim.keymap.set("n", "<leader>du", ":cd ~/Library/Mobile\\ Documents/com~apple~CloudDocs/Documents/Uni/f2025 <BAR> Yazi cwd<CR>", {desc = "Uni"})
-vim.keymap.set("n", "<leader>dd", ":cd ~/Downloads <BAR> Yazi cwd<CR>", {desc = "Downloads"})
-vim.keymap.set("n", "<leader>ds", ":cd ~/.config/nvim/lua/plugins <BAR> Yazi cwd<CR>",                               {desc = "Settings"})
+-- zoxide bindings
+--
+vim.keymap.set("n","<leader>cx",function() local t=require("telescope"); if not (t.extensions and t.extensions.zoxide) then pcall(t.load_extension,"zoxide") end; t.extensions.zoxide.list() end,{desc="Zoxide: pick & cd"})
+
+-- vim.keymap.set("n", "<leader>cs", function()
+--   local ok, telescope = pcall(require, "telescope")
+--   if not ok then return end
+--   if not (telescope.extensions and telescope.extensions.zoxide) then
+--     pcall(telescope.load_extension, "zoxide")
+--   end
+--   telescope.extensions.zoxide.list()
+--   vim.schedule(function() vim.cmd("stopinsert") end) -- enter Normal mode in picker
+-- end, { desc = "Zoxide: pick & cd" })
+
+-- vim.keymap.set("n", "<leader>df", function()
+--   local t = require("telescope")
+--   t.load_extension("zoxide")
+--   t.extensions.zoxide.list({
+--     path_display = { shorten = { len = 1, exclude = { 1, -1 } } },
+--   })
+--   vim.schedule(function() vim.cmd("stopinsert") end)
+-- end, { desc = "Zoxide: pick & cd" })
+
+-- quick cd to zoxide dir
+-- vim.keymap.set("n", "<leader>dz", function() require("telescope").extensions.zoxide.list{} end, {desc = "Zoxide: quick cd"})
+-- add current dir to zoxide
+-- vim.keymap.set("n", "<leader>dZ", ":ZoxideAdd<CR>", {desc = "Zoxide: add CWD"})
+-- switch directories with zoxide
+-- vim.keymap.set("n", "<leader>dX", function() require("telescope").extensions.zoxide.list{} end, {desc = "Zoxide: switch dir"})
+
+-- vim.keymap.set("n", "<leader>dc", ":cd ~/Library/Mobile\\ Documents/com~apple~CloudDocs/Coding <BAR> Yazi cwd<CR>", {desc = "Coding"})
+-- vim.keymap.set("n", "<leader>dl", ":cd ~/Documents <BAR> Yazi cwd<CR>",                                             {desc = "Local Documents"})
+-- vim.keymap.set("n", "<leader>dn", ":cd ~/Library/Mobile\\ Documents/com~apple~CloudDocs/Notes <BAR> Yazi cwd<CR>",  {desc = "Notes"})
+-- vim.keymap.set("n", "<leader>du", ":cd ~/Library/Mobile\\ Documents/com~apple~CloudDocs/Documents/Uni/f2025 <BAR> Yazi cwd<CR>", {desc = "Uni"})
+-- vim.keymap.set("n", "<leader>dd", ":cd ~/Downloads <BAR> Yazi cwd<CR>", {desc = "Downloads"})
+-- vim.keymap.set("n", "<leader>ds", ":cd ~/.config/nvim/lua/plugins <BAR> Yazi cwd<CR>",                               {desc = "Settings"})
 
 
 -- lock/unlock current buffer (nomodifiable, readonly)

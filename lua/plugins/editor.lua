@@ -1,89 +1,89 @@
 return {
-    {
-        "sylvanfranklin/omni-preview.nvim",
-        opts = {}
-    },
-    {
-        "norcalli/nvim-colorizer.lua",
-    },
-    {
-        'MeanderingProgrammer/render-markdown.nvim',
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
-        ---@module 'render-markdown'
-        ---@type render.md.UserConfig
-        opts = {},
-    },
-    {
-         "hedyhli/outline.nvim",
-         opts = {},
-     },
-
-     {
-         "brianhuster/live-preview.nvim",
-     },
-
-     { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
 
     {
-        'nvim-orgmode/orgmode',
-        event = 'VeryLazy',
-        ft = { 'org' },
-        config = function()
-            ---@diagnostic disable-next-line: undefined-global
-            require('orgmode').setup({
-                mappings = {
-                    disable_all = true,
-                },
-            })
-            end,
-
-
-    },
-    {
-        "nvim-neorg/neorg",
-        -- lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
-        ft = "norg",
-        version = "*", -- Pin Neorg to the latest stable release
-        -- config = true,
-        dependencies = { "nvim-treesitter/nvim-treesitter" },
-        config = function()
-            require("neorg").setup({
-                load = {
-                    ["core.defaults"] = {},                 -- sensible defaults
-                    ["core.concealer"] = {},                -- better-looking headings/bullets
-                    ["core.esupports.indent"] = {},         -- Treesitter-aware indentation
-                    -- ["core.dirman"] = { config = {
-                    --     workspaces = { notes = "~/notes" },
-                    --     default_workspace = "notes",
-                    -- }},
-                },
-            })
-        end,
-    },
-    {
-        "hat0uma/csvview.nvim",
-        ---@module "csvview"
-        ---@type CsvView.Options
+        'stevearc/conform.nvim',
         opts = {
-            parser = { comments = { "#", "//" } },
-            keymaps = {
-                -- Text objects for selecting fields
-                textobject_field_inner = { "if", mode = { "o", "x" } },
-                textobject_field_outer = { "af", mode = { "o", "x" } },
-                -- Excel-like navigation:
-                -- Use <Tab> and <S-Tab> to move horizontally between fields.
-                -- Use <Enter> and <S-Enter> to move vertically between rows and place the cursor at the end of the field.
-                -- Note: In terminals, you may need to enable CSI-u mode to use <S-Tab> and <S-Enter>.
-                jump_next_field_end = { "<Tab>", mode = { "n", "v" } },
-                jump_prev_field_end = { "<S-Tab>", mode = { "n", "v" } },
-                jump_next_row = { "<Enter>", mode = { "n", "v" } },
-                jump_prev_row = { "<S-Enter>", mode = { "n", "v" } },
-            },
         },
-        cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
-
-
-
-
     },
-};
+
+  -- {
+  --   "L3MON4D3/LuaSnip",
+  --   keys = function()
+  --     -- Disable default tab keybinding in LuaSnip
+  --     return {}
+  --   end,
+  -- },
+
+  -- {"j-hui/fidget.nvim"},
+  -- opts = {
+  -- },
+  {    "windwp/nvim-autopairs",
+  event = "InsertEnter",
+  config = true
+  -- use opts = {} for passing setup options
+  -- this is equivalent to setup({}) function
+    },
+
+    {
+        "kylechui/nvim-surround",
+        version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
+        event = "VeryLazy",
+        config = function()
+            require("nvim-surround").setup({
+                -- Configuration here, or leave empty to use defaults
+            })
+        end
+    },
+
+-- The three "core" operations of add/delete/change can be done 
+-- with the keymaps ys{motion}{char}, ds{char}, and cs{target}{replacement}, respectively. 
+-- For the following examples, * will denote the cursor position:
+
+--     Old text                    Command         New text
+-- --------------------------------------------------------------------------------
+--     surr*ound_words             ysiw)           (surround_words)
+--     surr*ound_words             ysiw(           ( surround_words )
+--     *make strings               ys$"            "make strings"
+--     [delete ar*ound me!]        ds]             delete around me!
+--     remove <b>HTML t*ags</b>    dst             remove HTML tags
+--     'change quot*es'            cs'"            "change quotes"
+--     <b>or tag* types</b>        csth1<CR>       <h1>or tag types</h1>
+--     delete(functi*on calls)     dsf             function calls
+
+
+  {
+    'abecodes/tabout.nvim',
+    lazy = false,
+    config = function()
+      require('tabout').setup {
+        tabkey = '<Tab>', -- key to trigger tabout, set to an empty string to disable
+        backwards_tabkey = '<S-Tab>', -- key to trigger backwards tabout, set to an empty string to disable
+        act_as_tab = true, -- shift content if tab out is not possible
+        act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
+        default_tab = '<C-t>', -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
+        default_shift_tab = '<C-d>', -- reverse shift default action,
+        enable_backwards = true, -- well ...
+        completion = false, -- if the tabkey is used in a completion pum
+        tabouts = {
+          { open = "'", close = "'" },
+          { open = '"', close = '"' },
+          { open = '`', close = '`' },
+          { open = '(', close = ')' },
+          { open = '[', close = ']' },
+          { open = '{', close = '}' }
+        },
+        ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
+        exclude = {} -- tabout will ignore these filetypes
+      }
+    end,
+    dependencies = { -- These are optional
+      -- "nvim-treesitter/nvim-treesitter",
+      -- "L3MON4D3/LuaSnip",
+      -- "hrsh7th/nvim-cmp"
+    },
+    opt = true,  -- Set this to true if the plugin is optional
+    event = 'InsertCharPre', -- Set the event to 'InsertCharPre' for better compatibility
+    priority = 1000,
+  },
+
+}
