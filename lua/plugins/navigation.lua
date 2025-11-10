@@ -10,9 +10,7 @@ return {
                 open = {
                     function()
                         if vim.fn.exists(":Yazi") == 2 then
-                            vim.cmd("Yazi")                         -- yazi.nvim plugin
-                        else
-                            vim.cmd("tabnew | terminal yazi")       -- fallback: CLI yazi
+                            vim.cmd("Yazi cwd")                         -- yazi.nvim plugin
                         end
                     end,
                 },

@@ -218,7 +218,7 @@ km("n", "<leader>cR", function() require("workspaces").remove() end, {desc = "Wo
 
 -- zoxide bindings
 --
-vim.keymap.set("n","<leader>cx",function() local t=require("telescope"); if not (t.extensions and t.extensions.zoxide) then pcall(t.load_extension,"zoxide") end; t.extensions.zoxide.list() end,{desc="Zoxide: pick & cd"})
+vim.keymap.set("n","'",function() local t=require("telescope"); if not (t.extensions and t.extensions.zoxide) then pcall(t.load_extension,"zoxide") end; t.extensions.zoxide.list() end,{desc="Zoxide: pick & cd"})
 
 -- vim.keymap.set("n", "<leader>cs", function()
 --   local ok, telescope = pcall(require, "telescope")
@@ -336,7 +336,7 @@ vim.keymap.set("n", "q/", "<nop>")
 vim.keymap.set("n", "q?", "<nop>")
 vim.keymap.set("n", "s", "<nop>")
 vim.keymap.set("n", "gQ", "<nop>")
-vim.keymap.set("n", "'", "<nop>")
+-- vim.keymap.set("n", "'", "<nop>")
 vim.keymap.set("n", ".", "<nop>")
 vim.keymap.set("n", "qq", "<nop>")
 
