@@ -42,9 +42,9 @@
   "telescope.nvim": { "branch": "master", "commit": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026" },
   "typst-preview.nvim": { "branch": "master", "commit": "e544812bba84b4f7976590f2b6c0dfbd099e1893" },
   "vim-commentary": { "branch": "master", "commit": "64a654ef4a20db1727938338310209b6a63f60c9" },
-  "vimtex": { "branch": "master", "commit": "4ee6801bf6bd48420c31da6b59ed24ba720b18d9" },
+  "vimtex": { "branch": "master", "commit": "32bcb3922c20588e00de68f73c86312eda2141ad" },
   "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" },
   "workspaces.nvim": { "branch": "master", "commit": "55a1eb6f5b72e07ee8333898254e113e927180ca" },
   "yazi.nvim": { "branch": "main", "commit": "3f81faf0cf838acb312f0f0d75ac1a8ac69166ed" },
-  "yorumi.nvim": { "branch": "main", "commit": "85ad9174c64df14385e71393cf95a2ddea20d3e1" }
+  "yorumi-dusk.nvim": { "branch": "main", "commit": "b4c1b175ef951b355283ce3b667f92c9bc61e590" }
 }

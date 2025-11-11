@@ -61,6 +61,16 @@ return {
             -- { "<leader>zL", function() vim.fn.jobstart({ "zoxide", "query", "-l" }) end, desc = "Zoxide: list (messages)" },
         -- },
     },
+    -- {
+    --      "ahmedkhalf/project.nvim",
+    --      config = function()
+    --          require("project_nvim").setup({
+    --              -- detection_methods = { "lsp", "pattern" },
+    --              silent_chdir = false,
+    --              scope_chdir = "global",
+    --          })
+    --      end,
+    -- },
 
 
 
@@ -87,6 +97,74 @@ return {
             -- sorting_strategy = 'ascending',
         },
     },
+    -- config = function(_, opts)
+    --     local telescope = require("telescope")
+    --     telescope.setup(opts)
+    --     telescope.load_extension("projects")
+
+    --     vim.keymap.set("n", "<leader>p", function()
+    --         telescope.extensions.projects.projects({
+    --             initial_mode = "normal",
+    --         })
+    --     end, { desc = "Telescope: Projects" })
+    -- end,
+    config = function()
+    local t = require("telescope")
+    local z_utils = require("telescope._extensions.zoxide.utils")
+
+    t.setup({
+      -- your telescope defaults...
+      -- defaults = { path_display = { "truncate" } }, -- optional global
+      extensions = {
+        zoxide = {
+          prompt_title = "[ Zoxide ]",
+          mappings = {
+            -- <CR>: change cwd, then open yazi.nvim in that directory
+            default = {
+              action = function(selection)
+                vim.cmd.cd(selection.path)
+              end,
+              after_action = function(selection)
+                if vim.fn.executable("yazi") == 1 then
+                  -- either Lua API:
+                  -- require("yazi").yazi()
+                  -- or the command that opens in current cwd:
+                  vim.cmd("Yazi cwd")
+                else
+                  vim.notify("yazi not found on PATH", vim.log.levels.WARN)
+                end
+              end,
+            },
+            ["<C-f>"] = {
+                action = function(selection)
+                    vim.cmd.cd(selection.path)
+                    -- no after_action -> no yazi
+                end,
+            },
+            -- extra samples (optional)
+            ["<C-s>"] = { action = z_utils.create_basic_command("split") },
+            ["<C-v>"] = { action = z_utils.create_basic_command("vsplit") },
+          },
+        },
+      },
+    })
+    t.load_extension("zoxide")
+
+    -- Keymap to open the picker in insert mode with truncated display
+    vim.keymap.set("n", "<leader>z", function()
+      t.extensions.zoxide.list({
+        picker_opts = {
+          initial_mode = "insert",
+          -- Truncate paths in the results list:
+          path_display = { "truncate" },
+          -- If you prefer just the directory tail instead of truncation, use:
+          -- path_display = function(_, p) return require("telescope.utils").path_tail(p) end,
+        },
+        -- keepinsert helps when chaining into another picker
+        keepinsert = true,
+      })
+    end, { desc = "Zoxide jump" })
+  end,
    },
 
 
@@ -124,6 +202,7 @@ return {
                         open_for_directories = false,
                         keymaps = {
                             show_help = "H",
+                            change_working_directory = ";",
                         },
                     },
                     -- 👇 if you use `open_for_directories=true`, this is recommended

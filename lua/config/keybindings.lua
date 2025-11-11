@@ -28,14 +28,14 @@ end,
 -- viewing file systems: at current file and at cwd in yazi and in neotree -> 4 bindings
 -- yazi bindings
 km("n", "f", "<cmd>Yazi<cr>")
-km("n", "<leader>cw", "<cmd>Yazi cwd<cr>")
+km("n", "<leader>y", "<cmd>Yazi cwd<cr>")
 -- neotree bindings
 -- km("n", "<leader>cW", ":Neotree toggle left<CR>", {desc = "Neotree toggle"})
 -- km("n", "F", ":tcd <C-r>=expand('%:p:h')<CR> | Neotree toggle show reveal_force_cwd left<CR>", {silent = true, desc = "Neotree reveal"})
 
 
 
--- km("n", "F", ":Neotree toggle show reveal_force_cwd left<CR>", {silent = true, desc = "Neotree reveal"})
+km("n", "T", ":Neotree toggle left<CR>", {silent = true, desc = "Neotree toggle"})
 
 -- dir=" .. vim.fn.expand("%:p:h") .. "
 --
@@ -193,10 +193,10 @@ vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], {desc='term->normal'})
 
 vim.keymap.set("n", "<leader>t", function()
   vim.cmd("split")
-  local dir = vim.fn.expand("%:p:h")
-  if dir == "" then dir = vim.loop.cwd() end
-  vim.cmd("lcd " .. vim.fn.fnameescape(dir))
-  vim.cmd("resize -18")
+  -- local dir = vim.fn.expand("%:p:h")
+  -- if dir == "" then dir = vim.loop.cwd() end
+  -- vim.cmd("lcd " .. vim.fn.fnameescape(dir))
+  vim.cmd("resize -15")
   vim.cmd("terminal")
   vim.cmd("startinsert")
 end, { silent = true, noremap = true })
@@ -218,7 +218,20 @@ km("n", "<leader>cR", function() require("workspaces").remove() end, {desc = "Wo
 
 -- zoxide bindings
 --
-vim.keymap.set("n","'",function() local t=require("telescope"); if not (t.extensions and t.extensions.zoxide) then pcall(t.load_extension,"zoxide") end; t.extensions.zoxide.list() end,{desc="Zoxide: pick & cd"})
+-- vim.keymap.set("n","<leader>x",function() local t=require("telescope"); if not (t.extensions and t.extensions.zoxide) then pcall(t.load_extension,"zoxide") end; t.extensions.zoxide.list() end,{desc="Zoxide: pick & cd"})
+
+
+-- vim.keymap.set("n", "'", function()
+--   local t = require("telescope")
+--   if not (t.extensions and t.extensions.zoxide) then pcall(t.load_extension, "zoxide") end
+--   t.extensions.zoxide.list({
+--     previewer = false,
+--     initial_mode = "normal",
+--     path_display = function(_, p)
+--       return require("telescope.utils").path_tail(p)
+--     end,
+--   })
+-- end, { desc = "Zoxide: pick & cd" })
 
 -- vim.keymap.set("n", "<leader>cs", function()
 --   local ok, telescope = pcall(require, "telescope")

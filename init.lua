@@ -9,7 +9,7 @@ require("config.keybindings")
 
 
 -- set theme 
-vim.cmd.colorscheme("yorumi")
+vim.cmd.colorscheme("yorumi-dusk")
 -- iceclimber
 -- kanagawa-paper
 -- yorumi
