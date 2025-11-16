@@ -28,7 +28,7 @@ end,
 -- viewing file systems: at current file and at cwd in yazi and in neotree -> 4 bindings
 -- yazi bindings
 km("n", "f", "<cmd>Yazi<cr>")
-km("n", "<leader>y", "<cmd>Yazi cwd<cr>")
+km("n", "<leader>dw", "<cmd>Yazi cwd<cr>")
 -- neotree bindings
 -- km("n", "<leader>cW", ":Neotree toggle left<CR>", {desc = "Neotree toggle"})
 -- km("n", "F", ":tcd <C-r>=expand('%:p:h')<CR> | Neotree toggle show reveal_force_cwd left<CR>", {silent = true, desc = "Neotree reveal"})
@@ -205,14 +205,14 @@ end, { silent = true, noremap = true })
 -- workspace.nvim bindings
 -- switch workspaces
 -- km("n", "<leader>dw", function() require("telescope").extensions.workspaces.workspaces() end, {desc = "Workspace: switch"})
-vim.keymap.set("n", "<leader>d", function()
+vim.keymap.set("n", "<leader>dd", function()
   require("telescope").extensions.workspaces.workspaces()
   vim.schedule(function() vim.cmd("stopinsert") end)  -- leave insert as soon as picker opens
 end, { desc = "Workspace: switch" })
 -- add current cwd as workspace
-km("n", "<leader>cA", function() require("workspaces").add(vim.fn.getcwd()) end, {desc = "Workspace: add CWD"})
+-- km("n", "<leader>dA", function() require("workspaces").add(vim.fn.getcwd()) end, {desc = "Workspace: add CWD"})
 -- remove current workspace
-km("n", "<leader>cR", function() require("workspaces").remove() end, {desc = "Workspace: remove"})
+-- km("n", "<leader>cR", function() require("workspaces").remove() end, {desc = "Workspace: remove"})
 -- rename current workspace
 -- km("n", "<leader>dr", function() require("workspaces").rename() end, {desc = "Workspace: rename"})
 
@@ -713,10 +713,17 @@ local function VW(id) return '<Cmd>call VSCodeCall("' .. id .. '")<CR>' end
 
 map("n", "f", "<nop>")
 map("n", "F", "<nop>")
+map("n", "T", "<nop>")
 map("n", "<leader>f", "<nop>")
 map("n", "<leader>g", "<nop>")
 map("n", "<leader>?", "<nop>")
 map("n", "<leader>r", "<nop>")
+map("n", "<leader>d", "<nop>")
+map("n", "<leader>o", "<nop>")
+map("n", "<leader>;", "<nop>")
+map("n", "<leader>c", "<nop>")
+map("n", "<leader>b", "<nop>")
+map("n", "<leader>t", "<nop>")
 
 -- vim.keymap.set("n", "<leader>", '<Cmd>call VSCodeNotify("whichkey.show")<CR>', {silent=true})
 -- map("n", ";", "<nop>")

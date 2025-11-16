@@ -10,6 +10,7 @@ require("config.keybindings")
 
 -- set theme 
 vim.cmd.colorscheme("yorumi-dusk")
+-- solarized-osaka
 -- iceclimber
 -- kanagawa-paper
 -- yorumi
@@ -19,7 +20,11 @@ vim.cmd.colorscheme("yorumi-dusk")
 -- monalisa
 --
 
-
+-- vim.cmd([[
+  -- cnoreabbrev git Git
+  -- cnoreabbrev gdiffsplit Gdiffsplit
+  -- cnoreabbrev gblame Git blame
+-- ]])
 
 
 

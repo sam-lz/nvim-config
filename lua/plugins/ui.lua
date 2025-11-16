@@ -14,11 +14,51 @@ return {
         },
 
     },
+-- {
+-- 		"rcarriga/nvim-notify",
+-- 		opts = {
+-- 			timeout = 5000,
+-- 		},
+-- 	},
 
+-- {
+-- 		"akinsho/bufferline.nvim",
+-- 		event = "VeryLazy",
+-- 		keys = {
+-- 			{ "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next tab" },
+-- 			{ "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev tab" },
+-- 		},
+-- 		opts = {
+-- 			options = {
+-- 				mode = "tabs",
+-- 				-- separator_style = "slant",
+-- 				show_buffer_close_icons = false,
+-- 				show_close_icon = false,
+-- 			},
+-- 		},
+-- 	},
 
 
     {
         "tpope/vim-commentary",
+    },
+    {
+        "sam-lz/yorumi-dusk.nvim",
+        -- "/Users/saml./Library/Mobile Documents/com~apple~CloudDocs/Coding/misc/yorumi-dusk.nvim",
+    },
+    {
+        "yorumicolors/yorumi.nvim",
+    },
+    {
+		"craftzdog/solarized-osaka.nvim",
+		lazy = true,
+		priority = 1000,
+		opts = function()
+			return {
+				transparent = true,
+			}
+		end,
+        -- opts = {},
     },
     -- {
     --     "vimpostor/vim-tpipeline",
@@ -27,10 +67,10 @@ return {
     { "rebelot/kanagawa.nvim",
     },
 
-    {
-        "ptdewey/monalisa-nvim",
-        priority = 1000,
-    },
+    -- {
+    --     "ptdewey/monalisa-nvim",
+    --     priority = 1000,
+    -- },
     -- {
     --     "cocopon/iceberg.vim",
     -- },
@@ -40,9 +80,6 @@ return {
     --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     --     priority = 1000, -- make sure to load this before all the other plugins
     -- },
-    {
-        "sam-lz/yorumi-dusk.nvim",
-    },
     -- Using lazy.nvim
     -- {
     --     "cdmill/neomodern.nvim",
@@ -60,28 +97,28 @@ return {
     --     lazy = false,
     --     priority = 1000,
     -- },
-    {
-        "thesimonho/kanagawa-paper.nvim",
-        lazy = false,
-        priority = 1000,
-        opts = {},
-    },
+    -- {
+    --     "thesimonho/kanagawa-paper.nvim",
+    --     lazy = false,
+    --     priority = 1000,
+    --     opts = {},
+    -- },
 
     -- {
     --     "jwbaldwin/oscura.nvim",
     --     lazy = false,
     --     priority = 1000,
     -- },
-    {
-        "vague2k/huez.nvim",
-        -- if you want registry related features, uncomment this
-        import = "huez-manager.import",
-        branch = "stable",
-        event = "UIEnter",
-        config = function()
-            require("huez").setup({})
-        end,
-    },
+    -- {
+    --     "vague2k/huez.nvim",
+    --     -- if you want registry related features, uncomment this
+    --     import = "huez-manager.import",
+    --     branch = "stable",
+    --     event = "UIEnter",
+    --     config = function()
+    --         require("huez").setup({})
+    --     end,
+    -- },
     -- {
     -- "zaldih/themery.nvim",
     -- lazy = false,

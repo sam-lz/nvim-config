@@ -5,7 +5,7 @@ return {
         "natecraddock/workspaces.nvim",
         depencdencies = { "nvim-telescope/telescope.nvim" },
         opts = {
-            cd_type = "global",
+            cd_type = "tab",
             hooks = {
                 open = {
                     function()
@@ -62,6 +62,12 @@ return {
         -- },
     },
     -- {
+    --     "nvim-telescope/telescope-z.nvim",
+    --     config = function()
+    --         require("telescope").load_extension "z"
+    --     end,
+    -- },
+    -- {
     --      "ahmedkhalf/project.nvim",
     --      config = function()
     --          require("project_nvim").setup({
@@ -75,97 +81,134 @@ return {
 
 
     {
-        'nvim-telescope/telescope.nvim', tag = '0.1.8',
-        -- or                              , branch = '0.1.x',
+        'nvim-telescope/telescope.nvim',
+        -- tag = '0.1.9',
+        branch = '0.1.x',
         dependencies = { 'nvim-lua/plenary.nvim' },
-        opts = {
-        defaults = {
-            -- mappings = {
-            --    i = { ["<C-p>"] = actions.layout.toggle_preview },
-            --    n = { ["<C-p>"] = actions.layout.toggle_preview },
-            -- },
-            path_display = { "truncate" },
-            layout_strategy = 'horizontal',
-            layout_config = {
-                width = 0.9,
-                horizontal = {
-                    preview_cutoff = 90,
-                    preview_width = 0.4,
-                    results_width = 0.7,
-                },
-            },
-            -- sorting_strategy = 'ascending',
-        },
-    },
-    -- config = function(_, opts)
-    --     local telescope = require("telescope")
-    --     telescope.setup(opts)
-    --     telescope.load_extension("projects")
 
-    --     vim.keymap.set("n", "<leader>p", function()
-    --         telescope.extensions.projects.projects({
-    --             initial_mode = "normal",
-    --         })
-    --     end, { desc = "Telescope: Projects" })
-    -- end,
-    config = function()
-    local t = require("telescope")
-    local z_utils = require("telescope._extensions.zoxide.utils")
+        config = function()
+            local z_utils = require("telescope._extensions.zoxide.utils")
 
-    t.setup({
-      -- your telescope defaults...
-      -- defaults = { path_display = { "truncate" } }, -- optional global
-      extensions = {
-        zoxide = {
-          prompt_title = "[ Zoxide ]",
-          mappings = {
-            -- <CR>: change cwd, then open yazi.nvim in that directory
-            default = {
-              action = function(selection)
-                vim.cmd.cd(selection.path)
-              end,
-              after_action = function(selection)
-                if vim.fn.executable("yazi") == 1 then
-                  -- either Lua API:
-                  -- require("yazi").yazi()
-                  -- or the command that opens in current cwd:
-                  vim.cmd("Yazi cwd")
-                else
-                  vim.notify("yazi not found on PATH", vim.log.levels.WARN)
-                end
-              end,
-            },
-            ["<C-f>"] = {
-                action = function(selection)
-                    vim.cmd.cd(selection.path)
-                    -- no after_action -> no yazi
-                end,
-            },
-            -- extra samples (optional)
-            ["<C-s>"] = { action = z_utils.create_basic_command("split") },
-            ["<C-v>"] = { action = z_utils.create_basic_command("vsplit") },
-          },
-        },
-      },
-    })
-    t.load_extension("zoxide")
+            require("telescope").setup({
+                defaults = {
+                    border = false,
+                    mappings = {
+                        i = {
+                            -- ["<esc>"] = require('telescope.actions').close,
+                            -- ["<C-p>"] = require('telescope.layout_actions').toggle_preview,
+                            -- ["<C-p>"] = require('telescope.actions').layout.toggle_preview,
+                            ["<Tab>"] = false,      -- remove <Tab> in insert mode
+                        },
+                        n = {
+                        --     ["<C-p>"] = require('telescope.actions').layout.toggle_preview,
+                            ["<Tab>"] = false,
+                        },
+                        },
+                        -- path_display = { "truncate" },
+                        -- sorting_strategy = 'ascending',
+                        -- path_display = {
+                        --     filename_first = {
+                        --         reverse_directories = true
+                        --     },
+                        -- },
 
-    -- Keymap to open the picker in insert mode with truncated display
-    vim.keymap.set("n", "<leader>z", function()
-      t.extensions.zoxide.list({
-        picker_opts = {
-          initial_mode = "insert",
-          -- Truncate paths in the results list:
-          path_display = { "truncate" },
-          -- If you prefer just the directory tail instead of truncation, use:
-          -- path_display = function(_, p) return require("telescope.utils").path_tail(p) end,
+                        -- path_display = function(opts, path)
+                        --     local tail = require("telescope.utils").path_tail(path)
+                        --     return string.format("%s (%s)", tail, path)
+                        -- end,
+                        -- path_display = function(_, path)
+                        --     local utils = require("telescope.utils")
+                        --     local tail = utils.path_tail(path)
+
+                        --     local parts = {}
+                        --     for part in string.gmatch(path, "[^/]+") do
+                        --         table.insert(parts, 1, part) -- insert at front to reverse order
+                        --     end
+                        --     local reversed = table.concat(parts, "/")
+
+                        --     return string.format("%s (%s)", tail, reversed)
+                        -- end,
+                        path_display = function(_, path)
+                            local utils = require("telescope.utils")
+                            local tail = utils.path_tail(path)   -- filename
+
+                            -- directory part without the filename, e.g. "a/b/c/file" -> "a/b/c"
+                            local dir = path:match("(.+)/[^/]+$")
+
+                            if not dir then
+                                -- no directory component, just return the filename
+                                return tail
+                            end
+
+                            -- reverse the directory components: "a/b/c" -> "c/b/a"
+                            local parts = {}
+                            for part in string.gmatch(dir, "[^/]+") do
+                                table.insert(parts, 1, part) -- insert at front to reverse
+                            end
+                            local reversed = table.concat(parts, "/")
+
+                            return string.format("%s (%s)", tail, reversed)
+                        end,
+
+
+
+                        layout_config = {
+                            horizontal = {
+                                width = {padding = 5},
+                                height = {padding = 15},
+                                preview_cutoff = 120,
+                                preview_width = 0.3,
+                                results_width = 0.7,
+                            },
+                        },
+                    },
+                    extensions = {
+                        -- z = {
+                        --     path_display = function(_, path)
+                        --         local rev_dir, filename = reverse_dirs(path)
+                        --         return string.format("%s (%s)", filename, rev_dir)
+                        --     end,
+                        -- },
+                        zoxide = {
+                            prompt_title = "",
+                            mappings = {
+                                default = {
+                                    action = function(selection)
+                                        vim.cmd.cd(selection.path)
+                                    end,
+                                    after_action = function(selection)
+                                        if vim.fn.executable("yazi") == 1 then
+                                            vim.cmd("Yazi cwd")
+                                        else
+                                            vim.notify("yazi not found on PATH", vim.log.levels.WARN)
+                                        end
+                                    end,
+                                },
+                                ["<Tab>"] = {
+                                    action = function(selection)
+                                        vim.cmd.cd(selection.path)
+                                    end,
+                                },
+                                ["<C-s>"] = { action = z_utils.create_basic_command("split") },
+                                ["<C-v>"] = { action = z_utils.create_basic_command("vsplit") },
+                            },
+                        },
+                    },
+                })
+                require("telescope").load_extension("zoxide")
+
+                vim.keymap.set("n", "<leader>;", function()
+                    require("telescope").extensions.zoxide.list({
+                        picker_opts = {
+                            initial_mode = "normal",
+                            path_display = { "tail" },
+                            -- path_display = function(_, p) return require("telescope.utils").path_tail(p) end,
+                        },
+                        keepinsert = true,
+                    })
+                end, { desc = "Zoxide jump" })
+            end,
         },
-        -- keepinsert helps when chaining into another picker
-        keepinsert = true,
-      })
-    end, { desc = "Zoxide jump" })
-  end,
-   },
 
 
     {
