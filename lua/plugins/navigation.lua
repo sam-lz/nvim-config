@@ -197,7 +197,7 @@ return {
                 })
                 require("telescope").load_extension("zoxide")
 
-                vim.keymap.set("n", "<leader>;", function()
+                vim.keymap.set("n", "<leader>ds", function()
                     require("telescope").extensions.zoxide.list({
                         picker_opts = {
                             initial_mode = "normal",

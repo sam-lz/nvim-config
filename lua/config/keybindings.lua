@@ -2,6 +2,9 @@ local km = vim.keymap.set
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- command key <D-key>
+-- option key <M-key>
+
 -- essentials
 vim.keymap.set({"n", "v"} , "<leader><leader>", ":", { noremap = true })
 vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { desc = "Save file" })
@@ -292,7 +295,8 @@ vim.keymap.set("n", "<leader>bl", toggle_lock, { desc = "Toggle buffer lock" })
 
 
 -- advanced controls
--- vim.keymap.set("n", "<leader>sf", ":source<CR>", { desc = "Toggle fold" })
+-- vim.keymap.set("n", "<D-s>", ":source<CR>", { desc = "Source file" })
+-- vim.keymap.set("n", "<M-s>", ":write<CR>", { desc = "Save file" })
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -724,6 +728,9 @@ map("n", "<leader>;", "<nop>")
 map("n", "<leader>c", "<nop>")
 map("n", "<leader>b", "<nop>")
 map("n", "<leader>t", "<nop>")
+-- map("n", "/", "<nop>")
+
+-- map("n", "/", '<Cmd>call VSCodeNotify("flash-vscode.jump")<CR>')
 
 -- vim.keymap.set("n", "<leader>", '<Cmd>call VSCodeNotify("whichkey.show")<CR>', {silent=true})
 -- map("n", ";", "<nop>")
@@ -886,9 +893,9 @@ map("n", "<Tab>",        V("editor.toggleFold"),                  opts)
 -- map("n", "<leader>twj", V("workbench.action.moveEditorToBelowGroup"), o)
 
 -- -- Lists / switchers
--- map("n", "<leader>f", V("workbench.action.showAllEditors"),           o)    -- all editors
+map("n", "<leader>f", V("workbench.action.showAllEditors"),           o)    -- all editors
 map("n", "<leader>s", V("workbench.action.showAllEditorsByMostRecentlyUsed"), o)
--- map("n", "<leader>s", V("workbench.action.openEditorsView"),          o)    -- Open Editors view
+-- map("n", "<leader>e", V("workbench.action.openEditorsView"),          o)    -- Open Editors view
 -- map("n", "<leader>tR", V("workbench.files.action.revealActiveFileInExplorer"), o) -- reveal in explorer
 --
 --

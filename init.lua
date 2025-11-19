@@ -9,7 +9,8 @@ require("config.keybindings")
 
 
 -- set theme 
-vim.cmd.colorscheme("yorumi-dusk")
+vim.cmd.colorscheme("solarized-osaka")
+-- yorumi-dusk
 -- solarized-osaka
 -- iceclimber
 -- kanagawa-paper
