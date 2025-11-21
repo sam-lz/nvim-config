@@ -33,12 +33,29 @@ end,
 km("n", "f", "<cmd>Yazi<cr>")
 km("n", "<leader>dw", "<cmd>Yazi cwd<cr>")
 -- neotree bindings
+km("n", "F", function()
+  if vim.bo.buftype ~= "" then
+    return
+  end
+  require("neo-tree.command").execute({
+    action = "show",
+    toggle = true,
+    -- source = "filesystem",
+    position = "left",
+    reveal = true,
+    -- reveal_force_cwd = true,
+    -- dir = vim.fn.expand("%:p:h"),
+    dir = vim.fn.getcwd(),
+  })
+end, { desc = "Neo-tree: root at file dir" })
+
+
+
+
 -- km("n", "<leader>cW", ":Neotree toggle left<CR>", {desc = "Neotree toggle"})
 -- km("n", "F", ":tcd <C-r>=expand('%:p:h')<CR> | Neotree toggle show reveal_force_cwd left<CR>", {silent = true, desc = "Neotree reveal"})
 
-
-
-km("n", "T", ":Neotree toggle left<CR>", {silent = true, desc = "Neotree toggle"})
+-- km("n", "F", ":Neotree toggle left<CR>", {silent = true, desc = "Neotree toggle"})
 
 -- dir=" .. vim.fn.expand("%:p:h") .. "
 --
@@ -51,41 +68,31 @@ km("n", "T", ":Neotree toggle left<CR>", {silent = true, desc = "Neotree toggle"
 --   { silent = true, desc = "Neo-tree: toggle at file dir" })
 
 
-vim.keymap.set("n", "F", function()
-  local cwd0 = vim.fn.getcwd()
+-- vim.keymap.set("n", "F", function()
+--   local cwd0 = vim.fn.getcwd()
 
-  local buf = vim.api.nvim_buf_get_name(0)
-  local dir = (buf ~= "" and vim.fn.fnamemodify(buf, ":p:h")) or cwd0
-  local real = vim.loop.fs_realpath(dir) or dir
-  if vim.fn.isdirectory(real) ~= 1 then
-    vim.notify("Neo-tree: not a directory: " .. real, vim.log.levels.WARN)
-    real = cwd0
-  end
+--   local buf = vim.api.nvim_buf_get_name(0)
+--   local dir = (buf ~= "" and vim.fn.fnamemodify(buf, ":p:h")) or cwd0
+--   local real = vim.loop.fs_realpath(dir) or dir
+--   if vim.fn.isdirectory(real) ~= 1 then
+--     vim.notify("Neo-tree: not a directory: " .. real, vim.log.levels.WARN)
+--     real = cwd0
+--   end
 
-  require("neo-tree.command").execute({
-    source = "filesystem",
-    toggle = true,
-    reveal = true,
-    reveal_force_cwd = false,    -- don’t force-change cwd
-    dir = real,
-  })
-
-  -- hard guard: restore Neovim cwd even if Neo-tree changed it
-  if vim.fn.getcwd() ~= cwd0 then
-    vim.fn.chdir(cwd0)
-  end
-end, { desc = "Neo-tree: toggle at file dir without changing cwd" })
-
--- km("n", "F", function()
 --   require("neo-tree.command").execute({
---     action = "show",
 --     source = "filesystem",
---     position = "left",
+--     toggle = true,
 --     reveal = true,
---     reveal_force_cwd = true,      -- change root even if outside current tree
---     dir = vim.fn.expand("%:p:h"), -- directory of current file
+--     reveal_force_cwd = false,    -- don’t force-change cwd
+--     dir = real,
 --   })
--- end, { desc = "Neo-tree: root at file dir" })
+
+--   -- hard guard: restore Neovim cwd even if Neo-tree changed it
+--   if vim.fn.getcwd() ~= cwd0 then
+--     vim.fn.chdir(cwd0)
+--   end
+-- end, { desc = "Neo-tree: toggle at file dir without changing cwd" })
+
 
 -- vim.keymap.set("n", "F", function()
 --   local dir = vim.fn.expand("%:p:h")
@@ -96,7 +103,7 @@ end, { desc = "Neo-tree: toggle at file dir without changing cwd" })
 -- telescope bindings
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>o', function() builtin.oldfiles{initial_mode = 'normal'}end, { desc = 'Telescope oldfiles' })
-vim.keymap.set('n', '<leader>s', function() builtin.buffers{initial_mode = 'normal'}end, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>s', function() builtin.buffers{initial_mode = 'normal'}end, {silent = true, desc = 'Telescope buffers'})
 vim.keymap.set('n', '<leader>f', function() builtin.find_files{initial_mode = 'normal'}end, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>g', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>?', builtin.help_tags, { desc = 'Telescope help tags' })
@@ -728,6 +735,7 @@ map("n", "<leader>;", "<nop>")
 map("n", "<leader>c", "<nop>")
 map("n", "<leader>b", "<nop>")
 map("n", "<leader>t", "<nop>")
+map("n", "<leader>y", "<nop>")
 -- map("n", "/", "<nop>")
 
 -- map("n", "/", '<Cmd>call VSCodeNotify("flash-vscode.jump")<CR>')
@@ -736,18 +744,19 @@ map("n", "<leader>t", "<nop>")
 -- map("n", ";", "<nop>")
 -- map("n", "F", V("workbench.action.toggleSidebarVisibility"))
 
-  vim.keymap.set(
-    "n",
-    "<leader><leader>",
-    '<Cmd>call VSCodeNotify("workbench.action.showCommands")<CR>',
-    { noremap = true, silent = true }
-  )
+  -- vim.keymap.set(
+  --   "n",
+  --   "<leader><leader>",
+  --   '<Cmd>call VSCodeNotify("workbench.action.showCommands")<CR>',
+  --   { noremap = true, silent = true }
+  -- )
+  map("n", "zz",        V("editor.toggleFold"),                  opts)
 
   vim.keymap.set("n", "tn",
   '<Cmd>call VSCodeNotify("workbench.action.files.newUntitledFile")<CR>',
   { noremap = true, silent = true })
 map("n", "tl",   V("workbench.action.nextEditor"),    opts)                     -- next tab
-map("n", "th",   V("workbench.action.previousEditor"),opts)     
+map("n", "th",   V("workbench.action.previousEditor"),opts)
 
 
 map("n", "<leader>h", V("workbench.action.focusLeftGroup"),  opts)
@@ -811,7 +820,6 @@ map("n", "<leader>nf", V("workbench.action.files.newUntitledFile"),    opts)
 -- map("x", "<leader>=", V("editor.action.formatSelection"),      opts)
 -- map("n", "zc",        V("editor.fold"),                        opts)
 -- map("n", "zo",        V("editor.unfold"),                      opts)
-map("n", "<Tab>",        V("editor.toggleFold"),                  opts)
 -- map("n", "zM",        V("editor.foldAll"),                     opts)
 -- map("n", "zR",        V("editor.unfoldAll"),                   opts)
 -- map("n", "<leader>]", V("editor.action.indentLines"),          opts)

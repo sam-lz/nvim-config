@@ -88,47 +88,56 @@ return {
 
         config = function()
             local z_utils = require("telescope._extensions.zoxide.utils")
-
+            local no_titles = {
+              prompt_title  = "",
+              results_title = "",
+              preview_title = "",
+            }
             require("telescope").setup({
                 defaults = {
-                    border = false,
-                    mappings = {
-                        i = {
-                            -- ["<esc>"] = require('telescope.actions').close,
-                            -- ["<C-p>"] = require('telescope.layout_actions').toggle_preview,
-                            -- ["<C-p>"] = require('telescope.actions').layout.toggle_preview,
-                            ["<Tab>"] = false,      -- remove <Tab> in insert mode
-                        },
-                        n = {
-                        --     ["<C-p>"] = require('telescope.actions').layout.toggle_preview,
-                            ["<Tab>"] = false,
-                        },
-                        },
-                        -- path_display = { "truncate" },
-                        -- sorting_strategy = 'ascending',
-                        -- path_display = {
-                        --     filename_first = {
-                        --         reverse_directories = true
-                        --     },
-                        -- },
+                  prompt_title  = "",
+                  results_title = "",
+                  preview_title = "",
+                  dynamic_preview_title = false,
+                  border = true,
+                  layout_strategy = "vertical",
+                  mappings = {
+                    i = {
+                      -- ["<esc>"] = require('telescope.actions').close,
+                      -- ["<C-p>"] = require('telescope.layout_actions').toggle_preview,
+                      -- ["<C-p>"] = require('telescope.actions').layout.toggle_preview,
+                      ["<Tab>"] = false,      -- remove <Tab> in insert mode
+                    },
+                    n = {
+                      --     ["<C-p>"] = require('telescope.actions').layout.toggle_preview,
+                      ["<Tab>"] = false,
+                    },
+                  },
+                  -- path_display = { "truncate" },
+                  -- sorting_strategy = 'ascending',
+                  -- path_display = {
+                    --     filename_first = {
+                      --         reverse_directories = true
+                      --     },
+                      -- },
 
-                        -- path_display = function(opts, path)
+                      -- path_display = function(opts, path)
                         --     local tail = require("telescope.utils").path_tail(path)
                         --     return string.format("%s (%s)", tail, path)
                         -- end,
                         -- path_display = function(_, path)
-                        --     local utils = require("telescope.utils")
-                        --     local tail = utils.path_tail(path)
+                          --     local utils = require("telescope.utils")
+                          --     local tail = utils.path_tail(path)
 
-                        --     local parts = {}
-                        --     for part in string.gmatch(path, "[^/]+") do
-                        --         table.insert(parts, 1, part) -- insert at front to reverse order
-                        --     end
-                        --     local reversed = table.concat(parts, "/")
+                          --     local parts = {}
+                          --     for part in string.gmatch(path, "[^/]+") do
+                          --         table.insert(parts, 1, part) -- insert at front to reverse order
+                          --     end
+                          --     local reversed = table.concat(parts, "/")
 
-                        --     return string.format("%s (%s)", tail, reversed)
-                        -- end,
-                        path_display = function(_, path)
+                          --     return string.format("%s (%s)", tail, reversed)
+                          -- end,
+                          path_display = function(_, path)
                             local utils = require("telescope.utils")
                             local tail = utils.path_tail(path)   -- filename
 
@@ -136,31 +145,84 @@ return {
                             local dir = path:match("(.+)/[^/]+$")
 
                             if not dir then
-                                -- no directory component, just return the filename
-                                return tail
+                              -- no directory component, just return the filename
+                              return tail
                             end
 
                             -- reverse the directory components: "a/b/c" -> "c/b/a"
                             local parts = {}
                             for part in string.gmatch(dir, "[^/]+") do
-                                table.insert(parts, 1, part) -- insert at front to reverse
+                              table.insert(parts, 1, part) -- insert at front to reverse
                             end
                             local reversed = table.concat(parts, "/")
 
                             return string.format("%s (%s)", tail, reversed)
-                        end,
+                          end,
 
 
 
-                        layout_config = {
-                            horizontal = {
-                                width = {padding = 5},
-                                height = {padding = 15},
-                                preview_cutoff = 120,
-                                preview_width = 0.3,
-                                results_width = 0.7,
+                          layout_config = {
+                            vertical = {
+                              -- width = {padding = 20},
+                              -- height = {padding = 5},
+                              width = {padding = 10},
+                              height = {padding = 5},
+                              -- prompt_position = "top",
                             },
-                        },
+                            -- horizontal = {
+                              --     width = {padding = 0},
+                              --     height = {padding = 15},
+                              --     preview_cutoff = 120,
+                              --     preview_width = 0.3,
+                              --     results_width = 0.7,
+                              -- },
+                            },
+                    },
+                    pickers = {
+                      buffers = {
+                        prompt_title = "",
+                        preview_title = "",
+                        sort_lastused = true,
+                        -- ignore_current_buffer = true
+                        -- optionally:
+                        -- only_cwd = true,          -- only buffers from current working dir
+                      },
+                      -- oldfiles = {
+                      --   prompt_title = "",
+                      -- },
+                      find_files                    = no_titles,
+                      live_grep                     = no_titles,
+                      grep_string                   = no_titles,
+                      -- buffers                       = no_titles,
+                      oldfiles                      = no_titles,
+                      help_tags                     = no_titles,
+                      man_pages                     = no_titles,
+                      current_buffer_fuzzy_find     = no_titles,
+                      git_files                     = no_titles,
+                      git_status                    = no_titles,
+                      git_commits                   = no_titles,
+                      git_bcommits                  = no_titles,
+                      git_branches                  = no_titles,
+                      lsp_references                = no_titles,
+                      lsp_definitions               = no_titles,
+                      lsp_implementations           = no_titles,
+                      lsp_type_definitions          = no_titles,
+                      diagnostics                   = no_titles,
+                      treesitter                    = no_titles,
+                      commands                      = no_titles,
+                      command_history               = no_titles,
+                      search_history                = no_titles,
+                      marks                         = no_titles,
+                      registers                     = no_titles,
+                      keymaps                       = no_titles,
+                      colorscheme                   = no_titles,
+                      spell_suggest                 = no_titles,
+                      jumplist                      = no_titles,
+                      quickfix                      = no_titles,
+                      loclist                       = no_titles,
+                      -- add any plugin pickers you use here:
+                      -- zoxide = no_titles,
+                      -- projects = no_titles,
                     },
                     extensions = {
                         -- z = {
@@ -171,6 +233,9 @@ return {
                         -- },
                         zoxide = {
                             prompt_title = "",
+                            results_title = "",
+                            preview_title = "",
+                            dynamic_preview_title = false,
                             mappings = {
                                 default = {
                                     action = function(selection)
@@ -194,17 +259,22 @@ return {
                             },
                         },
                     },
+                    preview_title = "",
                 })
                 require("telescope").load_extension("zoxide")
 
-                vim.keymap.set("n", "<leader>ds", function()
+                vim.keymap.set("n", "<leader>;", function()
                     require("telescope").extensions.zoxide.list({
                         picker_opts = {
                             initial_mode = "normal",
+                            -- preview_title = "",
                             path_display = { "tail" },
                             -- path_display = function(_, p) return require("telescope.utils").path_tail(p) end,
                         },
                         keepinsert = true,
+                        prompt_title          = "",
+                        results_title         = "",
+                        preview_title         = "",
                     })
                 end, { desc = "Zoxide jump" })
             end,

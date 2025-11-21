@@ -75,6 +75,7 @@ return {
     },
     {
         "hat0uma/csvview.nvim",
+        ft = {"csv"},
         ---@module "csvview"
         ---@type CsvView.Options
         opts = {
@@ -95,7 +96,19 @@ return {
         },
         cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
 
+        config = function(_, opts)
+          local csvview = require("csvview")
+          csvview.setup(opts)
 
+          -- auto-enable whenever a csv buffer is opened
+          vim.api.nvim_create_autocmd("FileType", {
+            pattern = "csv",
+            callback = function()
+              csvview.enable()
+              -- or: vim.cmd.CsvViewEnable()
+            end,
+          })
+        end,
 
 
     },
