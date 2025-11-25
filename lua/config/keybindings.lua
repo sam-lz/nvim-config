@@ -5,7 +5,6 @@ vim.g.maplocalleader = "\\"
 -- command key <D-key>
 -- option key <M-key>
 
--- essentials
 vim.keymap.set({"n", "v"} , "<leader><leader>", ":", { noremap = true })
 vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { desc = "Save file" })
 
@@ -20,7 +19,7 @@ km("n", "sa", "ysiw", {remap = true, desc = "Surround word (prompt)"})
 
 
 vim.keymap.set('n', '<leader>cd', function()
-    vim.cmd.lcd(vim.fn.expand('%:p:h'))
+    vim.cmd.tcd(vim.fn.expand('%:p:h'))
     vim.cmd.pwd()
 end,
 { desc = 'cd to current file dir'})
@@ -40,9 +39,9 @@ km("n", "F", function()
   require("neo-tree.command").execute({
     action = "show",
     toggle = true,
-    -- source = "filesystem",
+    source = "filesystem",
     position = "left",
-    reveal = true,
+    reveal = false,
     -- reveal_force_cwd = true,
     -- dir = vim.fn.expand("%:p:h"),
     dir = vim.fn.getcwd(),
@@ -129,7 +128,7 @@ vim.keymap.set("n", "L", "zl")
 vim.keymap.set("n", "H", "zh")
 
 -- vim.keymap.set("n", "<tab>", "za", {silent = true, desc = "Toggle fold"})
-vim.keymap.set("n", "<tab>", "za", {silent = true, desc = "Toggle fold"})
+vim.keymap.set("n", "zz", "za", {silent = true, desc = "Toggle fold"})
 
 vim.keymap.set("x", "ss", function()
   require("nvim-treesitter.incremental_selection").scope_incremental()

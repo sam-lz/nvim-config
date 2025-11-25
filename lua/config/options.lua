@@ -20,6 +20,12 @@ vim.api.nvim_create_autocmd("WinLeave", {
   callback = function() vim.wo.cursorline = false end,
 })
 
+vim.o.title = true
+
+-- vim.opt.cmdheight = 1
+-- if vim.fn.has("nvim-0.8") == 1 then
+-- 	vim.opt.cmdheight = 0
+-- end
 
 -- vim.o.winborder = "rounded"
 -- vim.o.winblend = 10
@@ -39,13 +45,16 @@ vim.o.expandtab = true
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.softtabstop = 2
+vim.opt.smarttab = true
+vim.o.smartindent = true
+vim.opt.breakindent = true
 
 -- synchronizes system clipboard
 vim.schedule(function()
     vim.o.clipboard = "unnamedplus"
 end)
 
-vim.o.scrolloff = 999
+vim.o.scrolloff = 15 -- 999
 
 -- place cursor where there is no text
 vim.o.virtualedit = "block"
@@ -94,10 +103,9 @@ vim.o.laststatus = 3
 -- vim.o.statusline = " %f%m %= %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %y %l:%c "
 
 
-vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
+-- vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
 
-
--- vim.o.statusline = " %f%{get(get(b:,'gitsigns_status_dict',{}),'head','')!=''?'  '.get(get(b:,'gitsigns_status_dict',{}),'head',''):''}%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
+vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c %{strftime('%H:%M')} "
 
 
 

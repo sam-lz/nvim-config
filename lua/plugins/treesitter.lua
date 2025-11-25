@@ -23,8 +23,8 @@ return {
                     enable = true,
                     keymaps = {
                         init_selection = "ss",
-                        node_incremental = "+",
-                        node_decremental = "_",
+                        node_incremental = "o",
+                        node_decremental = "i",
                         scope_incremental = "ss",
                     },
                 },

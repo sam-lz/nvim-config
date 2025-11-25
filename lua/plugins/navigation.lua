@@ -239,7 +239,8 @@ return {
                             mappings = {
                                 default = {
                                     action = function(selection)
-                                        vim.cmd.cd(selection.path)
+                                        -- vim.cmd.cd(selection.path)
+                                        vim.cmd.tcd(vim.fn.fnameescape(selection.path))
                                     end,
                                     after_action = function(selection)
                                         if vim.fn.executable("yazi") == 1 then
@@ -251,7 +252,8 @@ return {
                                 },
                                 ["<Tab>"] = {
                                     action = function(selection)
-                                        vim.cmd.cd(selection.path)
+                                        -- vim.cmd.cd(selection.path)
+                                        vim.cmd.tcd(vim.fn.fnameescape(selection.path))
                                     end,
                                 },
                                 ["<C-s>"] = { action = z_utils.create_basic_command("split") },
@@ -263,14 +265,14 @@ return {
                 })
                 require("telescope").load_extension("zoxide")
 
-                vim.keymap.set("n", "<leader>;", function()
+                vim.keymap.set("n", "<leader>i", function()
                     require("telescope").extensions.zoxide.list({
                         picker_opts = {
-                            initial_mode = "normal",
                             -- preview_title = "",
                             path_display = { "tail" },
                             -- path_display = function(_, p) return require("telescope.utils").path_tail(p) end,
                         },
+                        initial_mode = "normal",
                         keepinsert = true,
                         prompt_title          = "",
                         results_title         = "",
