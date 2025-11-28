@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd("WinLeave", {
 
 vim.o.title = true
 
--- vim.opt.cmdheight = 1
+vim.opt.cmdheight = 1
 -- if vim.fn.has("nvim-0.8") == 1 then
 -- 	vim.opt.cmdheight = 0
 -- end

@@ -1,6 +1,5 @@
 local km = vim.keymap.set
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+
 
 -- command key <D-key>
 -- option key <M-key>
@@ -200,7 +199,7 @@ vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], {desc='term->normal'})
 
 -- vim.keymap.set("n", "<leader>t", ":split | horizontal resize -15 | terminal<CR>", { noremap = true, silent = true })
 
-vim.keymap.set("n", "<leader>t", function()
+vim.keymap.set("n", "<leader>v", function()
   vim.cmd("split")
   -- local dir = vim.fn.expand("%:p:h")
   -- if dir == "" then dir = vim.loop.cwd() end
@@ -360,7 +359,7 @@ vim.keymap.set("n", "q?", "<nop>")
 vim.keymap.set("n", "s", "<nop>")
 vim.keymap.set("n", "gQ", "<nop>")
 -- vim.keymap.set("n", "'", "<nop>")
-vim.keymap.set("n", ".", "<nop>")
+-- vim.keymap.set("n", ".", "<nop>")
 vim.keymap.set("n", "qq", "<nop>")
 
 

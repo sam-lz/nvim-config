@@ -33,7 +33,7 @@ return {
         harpoon:setup()
 
         -- add current file
-        vim.keymap.set("n", "<leader>B", function() harpoon:list():add() end)
+        vim.keymap.set("n", "<leader>ba", function() harpoon:list():add() end)
 
         -- quick menu
         vim.keymap.set("n", "<leader>bb", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
@@ -110,6 +110,8 @@ return {
                     },
                     n = {
                       --     ["<C-p>"] = require('telescope.actions').layout.toggle_preview,
+                      -- ["m"] = require('telescope.builtin').keymaps.preview_scrolling_down,
+                      -- [","] = require('telescope.builtin').keymaps.preview_scrolling_up,
                       ["<Tab>"] = false,
                     },
                   },
@@ -265,14 +267,14 @@ return {
                 })
                 require("telescope").load_extension("zoxide")
 
-                vim.keymap.set("n", "<leader>i", function()
+                vim.keymap.set("n", ".", function()
                     require("telescope").extensions.zoxide.list({
                         picker_opts = {
                             -- preview_title = "",
                             path_display = { "tail" },
                             -- path_display = function(_, p) return require("telescope.utils").path_tail(p) end,
                         },
-                        initial_mode = "normal",
+                        initial_mode = "insert",
                         keepinsert = true,
                         prompt_title          = "",
                         results_title         = "",

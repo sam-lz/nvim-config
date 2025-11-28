@@ -97,7 +97,7 @@ return {
               else
                 return dir
               end
-            end, }, {'filename', path = 1, shorting_target = 130}},
+            end, }, {'filename', path = 1, shorting_target = 90}},
             lualine_x = {{'location', padding = { left = 1, right = 1 }},{'filetype', padding = {left = 1, right = 1}}, {'encoding', padding = {left = 1, right = 1}}, {'fileformat', padding = {left = 1, right = 1}}, },
             lualine_y = {            {
               function()
@@ -150,6 +150,9 @@ return {
     --     "cocopon/iceberg.vim",
     -- },
     -- { 'datsfilipe/vesper.nvim' },
+    --
+    -- { "fcpg/vim-fahrenheit", },
+    --
     -- {
     --     "vague-theme/vague.nvim",
     --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
