@@ -54,7 +54,7 @@ vim.schedule(function()
     vim.o.clipboard = "unnamedplus"
 end)
 
-vim.o.scrolloff = 15 -- 999
+vim.o.scrolloff = 999     -- 15
 
 -- place cursor where there is no text
 vim.o.virtualedit = "block"

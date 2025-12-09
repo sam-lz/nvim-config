@@ -22,22 +22,23 @@ return {
 -- 		},
 -- 	},
 
-    -- {
-    --   "akinsho/bufferline.nvim",
-    --   event = "VeryLazy",
-    --   keys = {
-    --     -- { "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next tab" },
-    --     -- { "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev tab" },
-    --   },
-    --   opts = {
-    --     options = {
-    --       mode = "tabs",
-    --       -- separator_style = "slant",
-    --       show_buffer_close_icons = false,
-    --       show_close_icon = false,
-    --     },
-    --   },
-    -- },
+    {
+      "akinsho/bufferline.nvim",
+      event = "VeryLazy",
+      keys = {
+        -- { "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next tab" },
+        -- { "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev tab" },
+      },
+      opts = {
+        options = {
+          mode = "tabs",
+          -- separator_style = "slant",
+          show_buffer_close_icons = false,
+          show_close_icon = false,
+          always_show_bufferline = false,
+        },
+      },
+    },
 
     {
         "tpope/vim-commentary",
@@ -60,12 +61,26 @@ return {
 		end,
         -- opts = {},
     },
+    {
+      "vague-theme/vague.nvim",
+      lazy = false,
+      priority = 1000,
+      opts = {
+        transparent = true
+      }
+    },
+    {
+      "killitar/obscure.nvim",
+      lazy = false,
+      priority = 1000,
+      opts = {
+        transparent = true,
+      }
+    },
     -- {
     --     "vimpostor/vim-tpipeline",
     -- },
 
-    { "rebelot/kanagawa.nvim",
-    },
     {
       'nvim-lualine/lualine.nvim',
       dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -97,7 +112,7 @@ return {
               else
                 return dir
               end
-            end, }, {'filename', path = 1, shorting_target = 90}},
+            end, }, {'filename', path = 1, shorting_target = 80}},
             lualine_x = {{'location', padding = { left = 1, right = 1 }},{'filetype', padding = {left = 1, right = 1}}, {'encoding', padding = {left = 1, right = 1}}, {'fileformat', padding = {left = 1, right = 1}}, },
             lualine_y = {            {
               function()
@@ -153,11 +168,6 @@ return {
     --
     -- { "fcpg/vim-fahrenheit", },
     --
-    -- {
-    --     "vague-theme/vague.nvim",
-    --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    --     priority = 1000, -- make sure to load this before all the other plugins
-    -- },
     -- Using lazy.nvim
     -- {
     --     "cdmill/neomodern.nvim",

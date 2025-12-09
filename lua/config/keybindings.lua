@@ -15,9 +15,9 @@ vim.keymap.set({ "n", "x", "o" }, ";", "/", { noremap = true, silent = true })
 
 
 km("n", "sa", "ysiw", {remap = true, desc = "Surround word (prompt)"})
+vim.keymap.set('n', '<tab>', '<C-^>')
 
-
-vim.keymap.set('n', '<leader>cd', function()
+vim.keymap.set('n', '<leader>cc', function()
     vim.cmd.tcd(vim.fn.expand('%:p:h'))
     vim.cmd.pwd()
 end,
@@ -390,15 +390,21 @@ map({'n', 'v'}, ',', function() vim.cmd('normal! ' .. (vim.v.count > 0 and vim.v
 
 -- code editor bindings
 
--- vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts) --definition on hover
+vim.keymap.set('n', 'K', vim.lsp.buf.hover) --definition on hover
+vim.keymap.set('n', '<leader>cs', vim.lsp.buf.signature_help)
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action)
+vim.keymap.set('n', '<leader>cr', vim.lsp.buf.references)
+vim.keymap.set('n', '<leader>cf', vim.lsp.buf.format)
+vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float)
+vim.keymap.set('n', '<leader>cp', vim.diagnostic.get_prev)
+vim.keymap.set('n', '<leader>cn', vim.diagnostic.get_next)
+
 -- vim.keymap.set('n', '<leader>sd', vim.lsp.buf.definition, opts)
 -- vim.keymap.set('n', 'sD', vim.lsp.buf.declaration, opts)
 -- vim.keymap.set('n', 'si', vim.lsp.buf.implementation, opts)
 -- vim.keymap.set('n', 'sr', vim.lsp.buf.references, opts)
-vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
--- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
--- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+
 -- vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, opts)
 
 

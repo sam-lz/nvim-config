@@ -109,6 +109,7 @@ return {
                       ["<Tab>"] = false,      -- remove <Tab> in insert mode
                     },
                     n = {
+                      -- ["q"] = require('telescope.actions').close,
                       --     ["<C-p>"] = require('telescope.actions').layout.toggle_preview,
                       -- ["m"] = require('telescope.builtin').keymaps.preview_scrolling_down,
                       -- [","] = require('telescope.builtin').keymaps.preview_scrolling_up,
