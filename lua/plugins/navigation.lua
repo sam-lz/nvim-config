@@ -268,7 +268,7 @@ return {
                 })
                 require("telescope").load_extension("zoxide")
 
-                vim.keymap.set("n", ".", function()
+                vim.keymap.set("n", "<CR>", function()
                     require("telescope").extensions.zoxide.list({
                         picker_opts = {
                             -- preview_title = "",

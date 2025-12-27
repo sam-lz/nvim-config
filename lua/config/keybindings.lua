@@ -13,6 +13,7 @@ vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { desc = "Save file" })
 -- rebind search
 vim.keymap.set({ "n", "x", "o" }, ";", "/", { noremap = true, silent = true })
 
+vim.keymap.set("n", "zz", "za", {silent = true, desc = "Toggle fold"})
 
 km("n", "sa", "ysiw", {remap = true, desc = "Surround word (prompt)"})
 vim.keymap.set('n', '<tab>', '<C-^>')
@@ -126,8 +127,6 @@ vim.keymap.set({"x", "v"}, "<leader>s", [[<esc>:'<,'>s/]], {desc = "Enter substi
 vim.keymap.set("n", "L", "zl")
 vim.keymap.set("n", "H", "zh")
 
--- vim.keymap.set("n", "<tab>", "za", {silent = true, desc = "Toggle fold"})
-vim.keymap.set("n", "zz", "za", {silent = true, desc = "Toggle fold"})
 
 vim.keymap.set("x", "ss", function()
   require("nvim-treesitter.incremental_selection").scope_incremental()
@@ -204,7 +203,7 @@ vim.keymap.set("n", "<leader>v", function()
   -- local dir = vim.fn.expand("%:p:h")
   -- if dir == "" then dir = vim.loop.cwd() end
   -- vim.cmd("lcd " .. vim.fn.fnameescape(dir))
-  vim.cmd("resize -15")
+  vim.cmd("resize -18")
   vim.cmd("terminal")
   vim.cmd("startinsert")
 end, { silent = true, noremap = true })
@@ -368,8 +367,8 @@ vim.keymap.set("n", "<leader>q", ":q<CR>", { desc = "Close window" })
 
 local map = vim.keymap.set
 
-map('n', 'J', function() vim.cmd('normal! ' .. (vim.v.count > 0 and vim.v.count or 5) .. 'j') end, {silent=true})
-map('n', 'K', function() vim.cmd('normal! ' .. (vim.v.count > 0 and vim.v.count or 5) .. 'k') end, {silent=true})
+-- map('n', 'J', function() vim.cmd('normal! ' .. (vim.v.count > 0 and vim.v.count or 5) .. 'j') end, {silent=true})
+-- map('n', 'K', function() vim.cmd('normal! ' .. (vim.v.count > 0 and vim.v.count or 5) .. 'k') end, {silent=true})
 
 map({'n', 'v'}, 'm', function() vim.cmd('normal! ' .. (vim.v.count > 0 and vim.v.count or 15) .. 'j') end, {silent=true})
 map({'n', 'v'}, ',', function() vim.cmd('normal! ' .. (vim.v.count > 0 and vim.v.count or 15) .. 'k') end, {silent=true})
@@ -473,7 +472,8 @@ vim.keymap.set("n", "<leader>rr", function()
   local ft = vim.bo.filetype
   local cmd
   if ft == "python" then
-    cmd = "PYTHONUNBUFFERED=1 python3 " .. file_esc
+    -- cmd = "PYTHONUNBUFFERED=1 python3 " .. file_esc
+    cmd = "python " .. file_esc
   elseif ft == "lua" then
     cmd = "lua " .. file_esc
   elseif ft == "c" then

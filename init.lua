@@ -2,43 +2,36 @@ require("config.options")
 require("config.lazy.lazy")
 require("config.keybindings")
 
--- vim.schedule(function()
---   vim.notify = function() end
--- end)
 
 
-
--- set theme 
-vim.cmd.colorscheme("vague")
--- solarized-osaka
--- vague
-
-
--- enable transparency (set before colorscheme)
--- vim.g.adventure_transparent = true
-
--- -- load theme
-vim.cmd.colorscheme("adventure")
-
-vim.cmd.colorscheme("vague")
--- apply lualine theme
-require("lualine").setup {
-    options = {
-        theme = _G.adventure_lualine,
-    }
-}
-vim.api.nvim_set_hl(0, "Visual",   { fg = "#feffff", bg = "#606060" })
-vim.api.nvim_set_hl(0, "PmenuSel", { fg = "#040404", bg = "#97d7ef" })
+vim.cmd.colorscheme("ymir")
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 
 
+-- local function plain_pum()
+--   vim.cmd([[
+--   hi! clear PmenuSbar
+--   hi! clear PmenuThumb]])
+--   vim.api.nvim_set_hl(0, "Pmenu",       { bg = "NONE" })
+--   vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+-- end
 
-local function plain_pum()
-  vim.cmd([[
-  hi! clear PmenuSbar
-  hi! clear PmenuThumb]])
-  vim.api.nvim_set_hl(0, "Pmenu",       { bg = "NONE" })
-  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+-- plain_pum()
+-- vim.api.nvim_create_autocmd("ColorScheme", { callback = plain_pum })
+
+
+if vim.g.neovide then
+    vim.o.guifont = "OverpassM Nerd Font Mono SemBd:h17"
+
+    vim.g.neovide_cursor_animation_length = 0.0
+    vim.g.neovide_scroll_animation_length = 0.0
+
+    vim.g.neovide_fullscreen = false
+
+    -- 4. MacOS Specific: Option Key Behavior
+    -- If true, Option key acts as "Meta/Alt" (useful for keybinds).
+    -- If false, it types special characters (e.g., £, ™).
+    -- vim.g.neovide_input_macos_alt_is_meta = true
 end
-
-plain_pum()
-vim.api.nvim_create_autocmd("ColorScheme", { callback = plain_pum })

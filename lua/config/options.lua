@@ -27,13 +27,15 @@ vim.opt.cmdheight = 1
 -- 	vim.opt.cmdheight = 0
 -- end
 
--- vim.o.winborder = "rounded"
+vim.o.winborder = "rounded"
 -- vim.o.winblend = 10
 -- vim.o.scroll = 15
 -- vim.opt_global.scroll = 6
 
 vim.o.foldmethod = 'indent'
-vim.o.foldenable = false
+vim.o.foldenable = true
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
 
 vim.o.number = true
 vim.o.relativenumber = true
@@ -103,9 +105,9 @@ vim.o.laststatus = 3
 -- vim.o.statusline = " %f%m %= %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %y %l:%c "
 
 
--- vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
+vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
 
-vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c %{strftime('%H:%M')} "
+-- vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c %{strftime('%H:%M')} "
 
 
 
