@@ -3,35 +3,33 @@ require("config.lazy.lazy")
 require("config.keybindings")
 
 
-
 vim.cmd.colorscheme("ymir")
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 
+-- require("e-ink").setup()
+-- vim.cmd.colorscheme("e-ink")
 
--- local function plain_pum()
---   vim.cmd([[
---   hi! clear PmenuSbar
---   hi! clear PmenuThumb]])
---   vim.api.nvim_set_hl(0, "Pmenu",       { bg = "NONE" })
---   vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+-- choose light mode or dark mode
+-- vim.opt.background = "dark"
+-- vim.opt.background = "light"
+--
+-- or do
+-- :set background=dark
+-- :set background=light
+-- transparency
+-- local set_hl = vim.api.nvim_set_hl
+-- local mono = require("e-ink.palette").mono()
+
+-- -- transparent only when `:set background=dark`
+-- if vim.o.background == "dark" then
+--    set_hl(0, "Normal", { fg = mono[12], bg = "NONE" })
 -- end
 
--- plain_pum()
--- vim.api.nvim_create_autocmd("ColorScheme", { callback = plain_pum })
-
-
 if vim.g.neovide then
-    vim.o.guifont = "OverpassM Nerd Font Mono SemBd:h17"
-
-    vim.g.neovide_cursor_animation_length = 0.0
-    vim.g.neovide_scroll_animation_length = 0.0
-
-    vim.g.neovide_fullscreen = false
-
-    -- 4. MacOS Specific: Option Key Behavior
-    -- If true, Option key acts as "Meta/Alt" (useful for keybinds).
-    -- If false, it types special characters (e.g., £, ™).
-    -- vim.g.neovide_input_macos_alt_is_meta = true
+  vim.o.guifont = "OverpassM Nerd Font Mono SemBd:h16"
+  vim.g.neovide_cursor_animation_length = 0.0
+  vim.g.neovide_scroll_animation_length = 0.0
+  vim.g.neovide_fullscreen = false
 end

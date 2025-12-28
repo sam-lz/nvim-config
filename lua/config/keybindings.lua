@@ -18,7 +18,7 @@ vim.keymap.set("n", "zz", "za", {silent = true, desc = "Toggle fold"})
 km("n", "sa", "ysiw", {remap = true, desc = "Surround word (prompt)"})
 vim.keymap.set('n', '<tab>', '<C-^>')
 
-vim.keymap.set('n', '<leader>cc', function()
+vim.keymap.set('n', '<leader>dw', function()
     vim.cmd.tcd(vim.fn.expand('%:p:h'))
     vim.cmd.pwd()
 end,
@@ -29,8 +29,16 @@ end,
 
 -- viewing file systems: at current file and at cwd in yazi and in neotree -> 4 bindings
 -- yazi bindings
-km("n", "f", "<cmd>Yazi<cr>")
-km("n", "<leader>dw", "<cmd>Yazi cwd<cr>")
+-- km("n", "f", "<cmd>Yazi<cr>")
+km("n", "f", function()
+  if vim.bo.buftype == "terminal" then
+    vim.cmd("Yazi cwd")
+    return
+  end
+  vim.cmd("Yazi")
+end)
+
+-- km("n", "<leader>dy", "<cmd>Yazi cwd<cr>")
 -- neotree bindings
 km("n", "F", function()
   if vim.bo.buftype ~= "" then
@@ -99,6 +107,7 @@ end, { desc = "Neo-tree: root at file dir" })
 --   vim.cmd("Neotree filesystem reveal left dir=" .. dir)
 -- end, { desc = "Neo-tree: reveal at file dir", silent = true })
 -- file navigation
+
 -- telescope bindings
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>o', function() builtin.oldfiles{initial_mode = 'normal'}end, { desc = 'Telescope oldfiles' })
@@ -107,6 +116,13 @@ vim.keymap.set('n', '<leader>f', function() builtin.find_files{initial_mode = 'n
 vim.keymap.set('n', '<leader>g', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>?', builtin.help_tags, { desc = 'Telescope help tags' })
 
+-- fzf bindings
+-- vim.keymap.set('n', '<leader>o', ':History<CR>')
+-- vim.keymap.set('n', '<leader>s', ':Buffers<CR>')
+-- vim.keymap.set('n', '<leader>f', ':Files<CR>')
+-- vim.keymap.set('n', '<leader>g', ':Rg<CR>')
+-- vim.keymap.set('n', '<leader>?', ':Helptags<CR>')
+--
 -- -- Left side
 -- vim.keymap.set("n", "<leader>el", function()
 --   local dir = vim.fn.expand("%:p:h")
