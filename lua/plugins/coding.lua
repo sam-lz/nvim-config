@@ -59,26 +59,26 @@ return {
       show_dirname = false,
     },
   },
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    ---@module "ibl"
-    ---@type ibl.config
-    opts = {
-      indent = {
-        char = "│",
-        highlight = "IblScope",
-      },
-      scope = {
-        enabled = false,
-        highlight = "IblScope",
-      },
-      whitespace = {
-        highlight = "IblScope",
-        remove_blankline_trail = true,
-      },
-    },
-  },
+  --{
+  --  "lukas-reineke/indent-blankline.nvim",
+  --  main = "ibl",
+  --  ---@module "ibl"
+  --  ---@type ibl.config
+  --  opts = {
+  --    indent = {
+  --      char = "│",
+  --      highlight = "IblScope",
+  --    },
+  --    scope = {
+  --      enabled = false,
+  --      highlight = "IblScope",
+  --    },
+  --    whitespace = {
+  --      highlight = "IblScope",
+  --      remove_blankline_trail = true,
+  --    },
+  --  },
+  --},
   {
     "folke/trouble.nvim",
     opts = {}, -- for default options, refer to the configuration section for custom setup.
@@ -125,7 +125,26 @@ return {
   -- },
 
 
-  -- {'akinsho/toggleterm.nvim', version = "*", config = true},
+  {
+    'akinsho/toggleterm.nvim',
+    version = "*",
+    config = function()
+      require("toggleterm").setup({
+        start_in_insert = false,
+        autochdir = true,
+        direction = 'float',
+        float_opts = {
+          border = 'shadow',
+          width = function()
+            return vim.o.columns
+          end,
+          height = function()
+            return vim.o.lines
+          end,
+        },
+      })
+    end
+  },
 
   { 'Civitasv/cmake-tools.nvim', opts = {} },
 

@@ -18,11 +18,13 @@ vim.keymap.set("n", "zz", "za", {silent = true, desc = "Toggle fold"})
 km("n", "sa", "ysiw", {remap = true, desc = "Surround word (prompt)"})
 vim.keymap.set('n', '<tab>', '<C-^>')
 
-vim.keymap.set('n', '<leader>dw', function()
+vim.keymap.set('n', 'cd', function()
     vim.cmd.tcd(vim.fn.expand('%:p:h'))
     vim.cmd.pwd()
 end,
 { desc = 'cd to current file dir'})
+
+km("n", ".", ":ToggleTerm<CR>")
 
 --
 -- km("n", "<leader>fs", ":Neotree reveal float<CR>", {desc = "Neotre float"})
@@ -183,7 +185,7 @@ vim.keymap.set("n", "<leader>=", "<C-w>v", { desc = "Split window vertically" })
 -- vim.keymap.set("n", "<leader>bh", ":bnext<CR>", { silent = true })
 -- vim.keymap.set("n", "<leader>bl", ":bprevious<CR>", { silent = true })
 -- Close current buffer
-vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { silent = true })
+vim.keymap.set("n", "<leader>d", ":bdelete<CR>", { silent = true })
 -- List buffers
 -- vim.keymap.set("n", "<leader>bb", ":ls<CR>", { silent = true })
 
@@ -210,25 +212,25 @@ end, { desc = 'New tab, close previous', silent = true })
 
 
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], {desc='term->normal'})
-
+vim.keymap.set('t', '<Tab>', [[<C-\><C-n>]], {desc='term->normal'})
 
 -- vim.keymap.set("n", "<leader>t", ":split | horizontal resize -15 | terminal<CR>", { noremap = true, silent = true })
 
-vim.keymap.set("n", "<leader>v", function()
-  vim.cmd("split")
-  -- local dir = vim.fn.expand("%:p:h")
-  -- if dir == "" then dir = vim.loop.cwd() end
-  -- vim.cmd("lcd " .. vim.fn.fnameescape(dir))
-  vim.cmd("resize -18")
-  vim.cmd("terminal")
-  vim.cmd("startinsert")
-end, { silent = true, noremap = true })
-
+-- vim.keymap.set("n", "<leader>v", function()
+--   vim.cmd("split")
+--   -- local dir = vim.fn.expand("%:p:h")
+--   -- if dir == "" then dir = vim.loop.cwd() end
+--   -- vim.cmd("lcd " .. vim.fn.fnameescape(dir))
+--   vim.cmd("resize -18")
+--   vim.cmd("terminal")
+--   vim.cmd("startinsert")
+-- end, { silent = true, noremap = true })
+km("n", "<leader>e", ":terminal<CR>")
 
 -- workspace.nvim bindings
 -- switch workspaces
 -- km("n", "<leader>dw", function() require("telescope").extensions.workspaces.workspaces() end, {desc = "Workspace: switch"})
-vim.keymap.set("n", "<leader>dd", function()
+vim.keymap.set("n", "<leader>cc", function()
   require("telescope").extensions.workspaces.workspaces()
   vim.schedule(function() vim.cmd("stopinsert") end)  -- leave insert as soon as picker opens
 end, { desc = "Workspace: switch" })

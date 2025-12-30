@@ -50,50 +50,41 @@ return {
   --     })
   --   end,
   -- },
-  --{
-  --  "ibhagwan/fzf-lua",
-  --  dependencies = { "nvim-tree/nvim-web-devicons" },
-  --  ---@module "fzf-lua"
-  --  ---@type fzf-lua.Config|{}
-  --  ---@diagnostics disable: missing-fields
-  --  opts = {
-  --      vim.api.nvim_create_autocmd("FileType", {
-  --      pattern = "fzf",
-  --      callback = function()
-  --        vim.keymap.set("t", "<Esc>", "<C-c>", { buffer = true, silent = true })
-  --      end,
-  --    }),
+  -- lazy.nvim spec
+  -- {
+  --   "ibhagwan/fzf-lua",
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  --   config = function()
+  --     local fzf = require("fzf-lua")
+  --     fzf.setup({
+  --       fzf_opts = {
+  --         ["--layout"] = "reverse",
+  --         ["--info"] = "inline",
+  --       },
+  --       -- winopts = {
+  --       --   preview = {
+  --       --     layout = "vertical",
+  --       --     vertical = "up:60%",
+  --       --   },
+  --       -- },
+  --       prompts = {
+  --         files      = { prompt = "> " },
+  --         oldfiles   = { prompt = "> " },
+  --         buffers    = { prompt = "> " },
+  --         live_grep  = { prompt = "> " },
+  --         help_tags  = { prompt = "> " },
+  --       },
+  --     })
+  --     local map = vim.keymap.set
+  --     local opts = { silent = true, noremap = true }
+  --     map("n", "<leader>zo", function() fzf.oldfiles() end, vim.tbl_extend("force", opts, { desc = "FZF: Oldfiles" }))
+  --     map("n", "<leader>zs", function() fzf.buffers() end, vim.tbl_extend("force", opts, { desc = "FZF: Buffers" }))
+  --     map("n", "<leader>zf", function() fzf.files() end, vim.tbl_extend("force", opts, { desc = "FZF: Files" }))
+  --     map("n", "<leader>zg", function() fzf.live_grep() end, vim.tbl_extend("force", opts, { desc = "FZF: Live Grep" }))
+  --     map("n", "<leader>z?", function() fzf.help_tags() end, vim.tbl_extend("force", opts, { desc = "FZF: Help Tags" }))
+  --   end,
+  -- },
 
-    -- local fzf = require("fzf-lua")
-    --  fzf.setup({
-    --    fzf_opts = {
-    --      ['--layout'] = 'reverse',
-    --    },
-    --    winopts = {
-    --      height = 0.85,
-    --      width  = 0.80,
-    --      preview = {
-    --        layout = 'horizontal',
-    --        horizontal = 'up:60%',
-    --      },
-    --    },
-    --    keymap = {
-    --      fzf = {
-    --        ["j"] = "down",
-    --        ["k"] = "up",
-    --      },
-    --    },
-    --  })
-    --  local map = vim.keymap.set
-    --  -- File and Text Search
-    --  map('n', '<leader>zf', fzf.files, { desc = 'Find Files' })
-    --  map('n', '<leader>zg', fzf.live_grep, { desc = 'Live Grep' })
-    --  map('n', '<leader>zb', fzf.buffers, { desc = 'Find Buffers' })
-    --  map('n', '<leader>zh', fzf.help_tags, { desc = 'Help Tags' })
-    --  map('n', '<leader>zz', fzf.zoxide, { desc = 'Zoxide Jump' })
-    -- }
-    -----@diagnostics enable: missing-fields
-  --},
   {
     "jvgrootveld/telescope-zoxide",
     dependencies = { "nvim-telescope/telescope.nvim" },
@@ -152,7 +143,7 @@ return {
           results_title         = "",
           preview_title         = "",
           dynamic_preview_title = false,
-          border                = true,
+          border                = false,
           layout_strategy       = "vertical",
           mappings              = {
             i = {
@@ -219,11 +210,11 @@ return {
 
           layout_config = {
             vertical = {
-              -- width = {padding = 20},
-              -- height = {padding = 5},
-              width = { padding = 10 },
-              height = { padding = 5 },
               -- prompt_position = "top",
+              -- width = { padding = 10 },
+              -- height = { padding = 5 },
+              width = { padding = 0 },
+              height = { padding = 0 },
             },
             -- horizontal = {
             --     width = {padding = 0},

@@ -1,20 +1,68 @@
 return {
+  -- {
+    --   'nvim-lualine/lualine.nvim',
+    --   dependencies = { 'nvim-tree/nvim-web-devicons' },
+    --   opts = {
+      --     options = {
+        --       icons_enabled = false,
+        --       theme = 'auto',
+        --       component_separators = { left = '|', right = '|' },
+        --       section_separators = { left = '', right = '' },
+        --       refresh = {
+          --         statusline = 100,
+          --         tabline    = 100,
+          --         winbar     = 100,
+          --       },
+          --     },
+          --     sections = {
+            --       lualine_a = {},
+            --       lualine_b = {},
+            --       -- 'diff', 'diagnostics',
+            --       -- {function()
+              --       -- return vim.fn.fnamemodify(vim.fn.getcwd(), ":t:h")
+              --       -- end,
+              --       lualine_c = {{'branch'}, { function()
+                --         local cwd    = vim.fn.getcwd()
+                --         local dir    = vim.fn.fnamemodify(cwd, ":t")   -- current dir
+                --         local parent = vim.fn.fnamemodify(cwd, ":h:t") -- parent dir
+                --         if parent ~= "" then
+                --           return parent .. "/" .. dir
+                --         else
+                --           return dir
+                --         end
+                --       end, }, { 'filename', path = 1, shorting_target = 80 } },
+                --       lualine_x = { { 'location', padding = { left = 1, right = 1 } },
+                --       { 'filetype', padding = { left = 1, right = 1 } },
+                --       { 'encoding', padding = { left = 1, right = 1 } },
+                --       { 'fileformat', padding = { left = 1, right = 1 } },
+                --       {
+                  --         function()
+                    --           return os.date("%H:%M")
+                    --         end,
+                    --       },
+
+                    --     },
+                    --       lualine_y = {},
+                    --       lualine_z = {},
+                    --     },
+                    --   },
+                    -- },
   {
     "nvim-tree/nvim-web-devicons",
   },
-  {
+  -- {
 
-    "sphamba/smear-cursor.nvim",
-    opts = {
+  --   "sphamba/smear-cursor.nvim",
+  --   opts = {
 
-      stiffness = 0.95,
-      trailing_stiffness = 0.99,
-      distance_stop_animating = 0.45,
-      damping = 0.9,
+  --     stiffness = 0.95,
+  --     trailing_stiffness = 0.99,
+  --     distance_stop_animating = 0.45,
+  --     damping = 0.9,
 
-    },
+  --   },
 
-  },
+  -- },
   -- {
   -- 		"rcarriga/nvim-notify",
   -- 		opts = {
@@ -52,13 +100,7 @@ return {
   {
     "tpope/vim-commentary",
   },
-  {
-    "sam-lz/yorumi-dusk.nvim",
-    -- "/Users/saml./Library/Mobile Documents/com~apple~CloudDocs/Coding/misc/yorumi-dusk.nvim",
-  },
-  {
-    "yorumicolors/yorumi.nvim",
-  },
+  {"andreasvc/vim-256noir"},
   {
     "craftzdog/solarized-osaka.nvim",
     lazy = true,
@@ -83,7 +125,7 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      transparent = true
+      transparent = true,
     }
   },
   {
@@ -91,7 +133,7 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      transparent = true,
+      transparent = false,
     }
   },
   {
@@ -119,57 +161,49 @@ return {
     end
   },
   -- {
+    --     "ptdewey/monalisa-nvim",
+    --     priority = 1000,
+    -- },
+    -- {
+      --     "cocopon/iceberg.vim",
+      -- },
+      -- { 'datsfilipe/vesper.nvim' },
+      --
+      -- { "fcpg/vim-fahrenheit", },
+      --
+      -- Using lazy.nvim
+      -- {
+        --     "cdmill/neomodern.nvim",
+        --     lazy = false,
+        --     priority = 1000,
+        --     config = function()
+          --         require("neomodern").setup({
+            --             -- optional configuration here
+            --         })
+            --         require("neomodern").load()
+            --     end,
+            -- },
+            -- {
+              --     "gabrielfrimodig/seashell.nvim",
+              --     lazy = false,
+              --     priority = 1000,
+              -- },
+              -- {
+                --     "thesimonho/kanagawa-paper.nvim",
+                --     lazy = false,
+                --     priority = 1000,
+                --     opts = {},
+                -- },
+
+                -- {
+                  --     "jwbaldwin/oscura.nvim",
+                  --     lazy = false,
+                  --     priority = 1000,
+                  -- },
+  -- {
   --     "vimpostor/vim-tpipeline",
   -- },
 
-  {
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    opts = {
-      options = {
-        icons_enabled = false,
-        theme = 'auto',
-        component_separators = { left = '|', right = '|' },
-        section_separators = { left = '', right = '' },
-        refresh = {
-          statusline = 100,
-          tabline    = 100,
-          winbar     = 100,
-        },
-      },
-      sections = {
-        lualine_a = {},
-        lualine_b = {},
-        -- 'diff', 'diagnostics',
-        -- {function()
-        -- return vim.fn.fnamemodify(vim.fn.getcwd(), ":t:h")
-        -- end,
-        lualine_c = {{'branch'}, { function()
-          local cwd    = vim.fn.getcwd()
-          local dir    = vim.fn.fnamemodify(cwd, ":t")   -- current dir
-          local parent = vim.fn.fnamemodify(cwd, ":h:t") -- parent dir
-          if parent ~= "" then
-            return parent .. "/" .. dir
-          else
-            return dir
-          end
-        end, }, { 'filename', path = 1, shorting_target = 80 } },
-        lualine_x = { { 'location', padding = { left = 1, right = 1 } },
-        { 'filetype', padding = { left = 1, right = 1 } },
-        { 'encoding', padding = { left = 1, right = 1 } },
-        { 'fileformat', padding = { left = 1, right = 1 } },
-        {
-          function()
-            return os.date("%H:%M")
-          end,
-        },
-
-      },
-        lualine_y = {},
-        lualine_z = {},
-      },
-    },
-  },
 
   -- {
   --   "b0o/incline.nvim",
@@ -204,46 +238,6 @@ return {
   --   end,
   -- },
   -- {
-  --     "ptdewey/monalisa-nvim",
-  --     priority = 1000,
-  -- },
-  -- {
-  --     "cocopon/iceberg.vim",
-  -- },
-  -- { 'datsfilipe/vesper.nvim' },
-  --
-  -- { "fcpg/vim-fahrenheit", },
-  --
-  -- Using lazy.nvim
-  -- {
-  --     "cdmill/neomodern.nvim",
-  --     lazy = false,
-  --     priority = 1000,
-  --     config = function()
-  --         require("neomodern").setup({
-  --             -- optional configuration here
-  --         })
-  --         require("neomodern").load()
-  --     end,
-  -- },
-  -- {
-  --     "gabrielfrimodig/seashell.nvim",
-  --     lazy = false,
-  --     priority = 1000,
-  -- },
-  -- {
-  --     "thesimonho/kanagawa-paper.nvim",
-  --     lazy = false,
-  --     priority = 1000,
-  --     opts = {},
-  -- },
-
-  -- {
-  --     "jwbaldwin/oscura.nvim",
-  --     lazy = false,
-  --     priority = 1000,
-  -- },
-  -- {
   --     "vague2k/huez.nvim",
   --     -- if you want registry related features, uncomment this
   --     import = "huez-manager.import",
@@ -270,72 +264,6 @@ return {
   -- end
   -- },
   -- Lazy
-
-
-
-
-
-  -- default config
-  -- require('lualine').setup {
-  -- options = {
-  --   icons_enabled = true,
-  --   theme = 'auto',
-  --   component_separators = { left = '', right = ''},
-  --   section_separators = { left = '', right = ''},
-  --   disabled_filetypes = {
-  --     statusline = {},
-  --     winbar = {},
-  --   },
-  --   ignore_focus = {},
-  --   always_divide_middle = true,
-  --   always_show_tabline = true,
-  --   globalstatus = false,
-  --   refresh = {
-  --     statusline = 1000,
-  --     tabline = 1000,
-  --     winbar = 1000,
-  --     refresh_time = 16, -- ~60fps
-  --     events = {
-  --       'WinEnter',
-  --       'BufEnter',
-  --       'BufWritePost',
-  --       'SessionLoadPost',
-  --       'FileChangedShellPost',
-  --       'VimResized',
-  --       'Filetype',
-  --       'CursorMoved',
-  --       'CursorMovedI',
-  --       'ModeChanged',
-  --     },
-  --   }
-  -- },
-  -- sections = {
-  --   lualine_a = {'mode'},
-  --   lualine_b = {'branch', 'diff', 'diagnostics'},
-  --   lualine_c = {'filename'},
-  --   lualine_x = {'encoding', 'fileformat', 'filetype'},
-  --   lualine_y = {'progress'},
-  --   lualine_z = {'location'}
-  -- },
-  -- inactive_sections = {
-  --   lualine_a = {},
-  --   lualine_b = {},
-  --   lualine_c = {'filename'},
-  --   lualine_x = {'location'},
-  --   lualine_y = {},
-  --   lualine_z = {}
-  -- },
-  -- tabline = {},
-  -- winbar = {},
-  -- inactive_winbar = {},
-  -- extensions = {}
-  -- }
-
-
-
-
-
-
 
   {
     "Eandrju/cellular-automaton.nvim",

@@ -2,11 +2,15 @@ require("config.options")
 require("config.lazy.lazy")
 require("config.keybindings")
 
+-- vim.diagnostic.config({
+--   signs = false,
+-- })
+vim.opt.signcolumn = "no"
 
-vim.cmd.colorscheme("ymir")
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+vim.cmd.colorscheme("256_noir")
+-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 
 -- require("e-ink").setup()
 -- vim.cmd.colorscheme("e-ink")

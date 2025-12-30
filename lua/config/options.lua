@@ -3,7 +3,6 @@
 --
 --
 
-
 -- vim.o.title = true
 vim.o.winblend = 0
 vim.o.pumblend = 0
@@ -105,8 +104,39 @@ vim.o.laststatus = 3
 -- vim.o.statusline = " %f%m %= %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %y %l:%c "
 
 
-vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
+-- vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
+-- vim.o.statusline = " %{fnamemodify(getcwd(),':h:t').'/'.fnamemodify(getcwd(),':t')} %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
+vim.o.statusline = " %{get(b:,'gitsigns_head','') != '' ? (b:gitsigns_head.' ') : ''}%{fnamemodify(getcwd(),':h:t').'/'.fnamemodify(getcwd(),':t')} %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
 
+-- branch for *current working directory* (not current buffer)
+_G._stl_cwd = nil
+_G._stl_cwd_branch = ""
+
+_G.update_cwd_branch = function()
+  local cwd = vim.fn.getcwd()
+  if cwd == _G._stl_cwd then return end
+  _G._stl_cwd = cwd
+
+  local out = vim.fn.systemlist({ "git", "-C", cwd, "rev-parse", "--abbrev-ref", "HEAD" })
+  if vim.v.shell_error == 0 and out[1] and out[1] ~= "" and out[1] ~= "HEAD" then
+    _G._stl_cwd_branch = out[1] .. " "
+  else
+    _G._stl_cwd_branch = ""
+  end
+
+  vim.cmd("redrawstatus")
+end
+
+_G.stl_cwd_branch = function()
+  return _G._stl_cwd_branch
+end
+
+vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
+  callback = function() _G.update_cwd_branch() end,
+})
+
+
+vim.o.statusline = " %{%v:lua.stl_cwd_branch()%}%{fnamemodify(getcwd(),':h:t').'/'.fnamemodify(getcwd(),':t')} %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
 -- vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c %{strftime('%H:%M')} "
 
 
