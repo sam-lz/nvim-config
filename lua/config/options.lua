@@ -131,7 +131,15 @@ _G.stl_cwd_branch = function()
   return _G._stl_cwd_branch
 end
 
-vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
+-- vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
+--   callback = function() _G.update_cwd_branch() end,
+-- })
+
+vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged", "FocusGained", "TermClose" }, {
+  callback = function() _G.update_cwd_branch() end,
+})
+
+vim.api.nvim_create_autocmd({ "ShellCmdPost" }, {
   callback = function() _G.update_cwd_branch() end,
 })
 
