@@ -2,34 +2,22 @@ require("config.options")
 require("config.lazy.lazy")
 require("config.keybindings")
 
--- vim.diagnostic.config({
---   signs = false,
--- })
 vim.opt.signcolumn = "no"
 
-vim.cmd.colorscheme("256_noir")
--- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
--- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
--- vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+vim.cmd.colorscheme("vague")
 
--- require("e-ink").setup()
--- vim.cmd.colorscheme("e-ink")
+-- vim.api.nvim_set_hl(0, "StatusLine", { bg = "#8a8a8a" })
+-- vim.cmd("hi! StatusLine guifg=#000000 ctermfg=0 gui=bold cterm=bold")
 
--- choose light mode or dark mode
--- vim.opt.background = "dark"
--- vim.opt.background = "light"
---
--- or do
--- :set background=dark
--- :set background=light
--- transparency
--- local set_hl = vim.api.nvim_set_hl
--- local mono = require("e-ink.palette").mono()
+-- highlight: 188 188 188
+-- vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
+-- vim.api.nvim_set_hl(0, "Visual", { bg = "#bcbcbc", fg = "#000000" })
 
--- -- transparent only when `:set background=dark`
--- if vim.o.background == "dark" then
---    set_hl(0, "Normal", { fg = mono[12], bg = "NONE" })
--- end
+
+
+
+
+
 
 if vim.g.neovide then
   vim.o.guifont = "OverpassM Nerd Font Mono SemBd:h16"

@@ -13,10 +13,9 @@ vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { desc = "Save file" })
 -- rebind search
 vim.keymap.set({ "n", "x", "o" }, ";", "/", { noremap = true, silent = true })
 
-vim.keymap.set("n", "zz", "za", {silent = true, desc = "Toggle fold"})
+vim.keymap.set("n", ".", "za", {silent = true, desc = "Toggle fold"})
 
 km("n", "sa", "ysiw", {remap = true, desc = "Surround word (prompt)"})
-vim.keymap.set('n', '<tab>', '<C-^>')
 
 vim.keymap.set('n', 'cd', function()
     vim.cmd.tcd(vim.fn.expand('%:p:h'))
@@ -24,12 +23,10 @@ vim.keymap.set('n', 'cd', function()
 end,
 { desc = 'cd to current file dir'})
 
-km("n", ".", ":ToggleTerm<CR>")
 
---
--- km("n", "<leader>fs", ":Neotree reveal float<CR>", {desc = "Neotre float"})
 
--- viewing file systems: at current file and at cwd in yazi and in neotree -> 4 bindings
+-- km("n", "``", "za")
+
 -- yazi bindings
 -- km("n", "f", "<cmd>Yazi<cr>")
 km("n", "f", function()
@@ -60,54 +57,6 @@ end, { desc = "Neo-tree: root at file dir" })
 
 
 
-
--- km("n", "<leader>cW", ":Neotree toggle left<CR>", {desc = "Neotree toggle"})
--- km("n", "F", ":tcd <C-r>=expand('%:p:h')<CR> | Neotree toggle show reveal_force_cwd left<CR>", {silent = true, desc = "Neotree reveal"})
-
--- km("n", "F", ":Neotree toggle left<CR>", {silent = true, desc = "Neotree toggle"})
-
--- dir=" .. vim.fn.expand("%:p:h") .. "
---
--- km("n", "F",
---   "<cmd>Neotree toggle show left dir=" .. vim.fn.expand("%:p:h") .. " reveal_force_cwd=true<cr>",
---   { desc = "Neo-tree reveal" })
--- root Neo-tree at the current file's directory and reveal the file
--- km("n", "F",
---   ":Neotree filesystem toggle left reveal reveal_force_cwd=true dir=<C-r>=expand('%:p:h')<CR><CR>",
---   { silent = true, desc = "Neo-tree: toggle at file dir" })
-
-
--- vim.keymap.set("n", "F", function()
---   local cwd0 = vim.fn.getcwd()
-
---   local buf = vim.api.nvim_buf_get_name(0)
---   local dir = (buf ~= "" and vim.fn.fnamemodify(buf, ":p:h")) or cwd0
---   local real = vim.loop.fs_realpath(dir) or dir
---   if vim.fn.isdirectory(real) ~= 1 then
---     vim.notify("Neo-tree: not a directory: " .. real, vim.log.levels.WARN)
---     real = cwd0
---   end
-
---   require("neo-tree.command").execute({
---     source = "filesystem",
---     toggle = true,
---     reveal = true,
---     reveal_force_cwd = false,    -- don’t force-change cwd
---     dir = real,
---   })
-
---   -- hard guard: restore Neovim cwd even if Neo-tree changed it
---   if vim.fn.getcwd() ~= cwd0 then
---     vim.fn.chdir(cwd0)
---   end
--- end, { desc = "Neo-tree: toggle at file dir without changing cwd" })
-
-
--- vim.keymap.set("n", "F", function()
---   local dir = vim.fn.expand("%:p:h")
---   if dir == "" then dir = vim.loop.cwd() end
---   vim.cmd("Neotree filesystem reveal left dir=" .. dir)
--- end, { desc = "Neo-tree: reveal at file dir", silent = true })
 -- file navigation
 
 -- telescope bindings
@@ -124,38 +73,16 @@ vim.keymap.set('n', '<leader>?', builtin.help_tags, { desc = 'Telescope help tag
 -- vim.keymap.set('n', '<leader>f', ':Files<CR>')
 -- vim.keymap.set('n', '<leader>g', ':Rg<CR>')
 -- vim.keymap.set('n', '<leader>?', ':Helptags<CR>')
---
--- -- Left side
--- vim.keymap.set("n", "<leader>el", function()
---   local dir = vim.fn.expand("%:p:h")
---   if dir == "" then dir = vim.loop.cwd() end
---   vim.cmd("Neotree left filesystem reveal dir=" .. dir)
--- end, { silent = true })
 
--- -- Toggle + reveal at file dir
--- vim.keymap.set("n", "<leader>et", function()
---   local dir = vim.fn.expand("%:p:h")
---   if dir == "" then dir = vim.loop.cwd() end
---   vim.cmd("Neotree toggle filesystem reveal dir=" .. dir)
--- end, { silent = true })
-
--- vim.keymap.set({"x", "n"}, "<C-s>", [[<esc>:'<,'>s/]], {desc = "Enter substitute mode in selection"})
 vim.keymap.set({"x", "v"}, "<leader>s", [[<esc>:'<,'>s/]], {desc = "Enter substitute mode in selection"})
 
-vim.keymap.set("n", "L", "zl")
-vim.keymap.set("n", "H", "zh")
+vim.keymap.set("n", "L", "20zl")
+vim.keymap.set("n", "H", "20zh")
 
 
 vim.keymap.set("x", "ss", function()
   require("nvim-treesitter.incremental_selection").scope_incremental()
 end, { silent = true, desc = "TS scope incremental" })
-
-
--- local o = {noremap = true, silent = true}
--- vim.keymap.set('i', '<C-h>', '<C-o>h', o)
--- vim.keymap.set('i', '<C-j>', '<C-o>j', o)
--- vim.keymap.set('i', '<C-k>', '<C-o>k', o)
--- vim.keymap.set('i', '<C-l>', '<C-o>l', o)
 
 -- window controls
 km("n", "+", [[<cmd>vertical resize +16<cr>]])
@@ -173,34 +100,16 @@ vim.keymap.set("n", "<leader>J", "<C-w>J", { silent = true, desc = "Move window 
 vim.keymap.set("n", "<leader>K", "<C-w>K", { silent = true, desc = "Move window far up" })
 vim.keymap.set("n", "<leader>L", "<C-w>L", { silent = true, desc = "Move window far right" })
 
--- vim.keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
 vim.keymap.set("n", "<leader>-", "<C-w>s", { desc = "Split window horizontally" })
--- vim.keymap.set("n", "<leader>v", "<C-w>v", { desc = "Split window vertically" })
 vim.keymap.set("n", "<leader>=", "<C-w>v", { desc = "Split window vertically" })
--- vim.keymap.set("n", "<leader>Q", "<C-w>o", { desc = "Close other windows" })
--- vim.keymap.set("n", "<leader>q", "<C-w>c", { desc = "Close window"})
 
--- buffers
--- Next / previous buffer
--- vim.keymap.set("n", "<leader>bh", ":bnext<CR>", { silent = true })
--- vim.keymap.set("n", "<leader>bl", ":bprevious<CR>", { silent = true })
--- Close current buffer
 vim.keymap.set("n", "<leader>d", ":bdelete<CR>", { silent = true })
--- List buffers
--- vim.keymap.set("n", "<leader>bb", ":ls<CR>", { silent = true })
 
 -- tabs
--- New tab
 vim.keymap.set("n", "tn", ":tabnew<CR>", { silent = true })
-
--- Close tab
 vim.keymap.set("n", "td", ":tabclose<CR>", { silent = true })
-
--- Next / previous tab
 vim.keymap.set("n", "tl", ":tabnext<CR>", { silent = true })
 vim.keymap.set("n", "th", ":tabprevious<CR>", { silent = true })
-
--- Move current tab left / right
 vim.keymap.set("n", "tH", ":-tabmove<CR>", { silent = true })
 vim.keymap.set("n", "tL", ":+tabmove<CR>", { silent = true })
 
@@ -214,8 +123,6 @@ end, { desc = 'New tab, close previous', silent = true })
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], {desc='term->normal'})
 vim.keymap.set('t', '<Tab>', [[<C-\><C-n>]], {desc='term->normal'})
 
--- vim.keymap.set("n", "<leader>t", ":split | horizontal resize -15 | terminal<CR>", { noremap = true, silent = true })
-
 -- vim.keymap.set("n", "<leader>v", function()
 --   vim.cmd("split")
 --   -- local dir = vim.fn.expand("%:p:h")
@@ -225,7 +132,7 @@ vim.keymap.set('t', '<Tab>', [[<C-\><C-n>]], {desc='term->normal'})
 --   vim.cmd("terminal")
 --   vim.cmd("startinsert")
 -- end, { silent = true, noremap = true })
-km("n", "<leader>e", ":terminal<CR>")
+-- km("n", "<leader>e", ":terminal<CR>")
 
 -- workspace.nvim bindings
 -- switch workspaces
@@ -234,62 +141,6 @@ vim.keymap.set("n", "<leader>cc", function()
   require("telescope").extensions.workspaces.workspaces()
   vim.schedule(function() vim.cmd("stopinsert") end)  -- leave insert as soon as picker opens
 end, { desc = "Workspace: switch" })
--- add current cwd as workspace
--- km("n", "<leader>dA", function() require("workspaces").add(vim.fn.getcwd()) end, {desc = "Workspace: add CWD"})
--- remove current workspace
--- km("n", "<leader>cR", function() require("workspaces").remove() end, {desc = "Workspace: remove"})
--- rename current workspace
--- km("n", "<leader>dr", function() require("workspaces").rename() end, {desc = "Workspace: rename"})
-
--- zoxide bindings
---
--- vim.keymap.set("n","<leader>x",function() local t=require("telescope"); if not (t.extensions and t.extensions.zoxide) then pcall(t.load_extension,"zoxide") end; t.extensions.zoxide.list() end,{desc="Zoxide: pick & cd"})
-
-
--- vim.keymap.set("n", "'", function()
---   local t = require("telescope")
---   if not (t.extensions and t.extensions.zoxide) then pcall(t.load_extension, "zoxide") end
---   t.extensions.zoxide.list({
---     previewer = false,
---     initial_mode = "normal",
---     path_display = function(_, p)
---       return require("telescope.utils").path_tail(p)
---     end,
---   })
--- end, { desc = "Zoxide: pick & cd" })
-
--- vim.keymap.set("n", "<leader>cs", function()
---   local ok, telescope = pcall(require, "telescope")
---   if not ok then return end
---   if not (telescope.extensions and telescope.extensions.zoxide) then
---     pcall(telescope.load_extension, "zoxide")
---   end
---   telescope.extensions.zoxide.list()
---   vim.schedule(function() vim.cmd("stopinsert") end) -- enter Normal mode in picker
--- end, { desc = "Zoxide: pick & cd" })
-
--- vim.keymap.set("n", "<leader>df", function()
---   local t = require("telescope")
---   t.load_extension("zoxide")
---   t.extensions.zoxide.list({
---     path_display = { shorten = { len = 1, exclude = { 1, -1 } } },
---   })
---   vim.schedule(function() vim.cmd("stopinsert") end)
--- end, { desc = "Zoxide: pick & cd" })
-
--- quick cd to zoxide dir
--- vim.keymap.set("n", "<leader>dz", function() require("telescope").extensions.zoxide.list{} end, {desc = "Zoxide: quick cd"})
--- add current dir to zoxide
--- vim.keymap.set("n", "<leader>dZ", ":ZoxideAdd<CR>", {desc = "Zoxide: add CWD"})
--- switch directories with zoxide
--- vim.keymap.set("n", "<leader>dX", function() require("telescope").extensions.zoxide.list{} end, {desc = "Zoxide: switch dir"})
-
--- vim.keymap.set("n", "<leader>dc", ":cd ~/Library/Mobile\\ Documents/com~apple~CloudDocs/Coding <BAR> Yazi cwd<CR>", {desc = "Coding"})
--- vim.keymap.set("n", "<leader>dl", ":cd ~/Documents <BAR> Yazi cwd<CR>",                                             {desc = "Local Documents"})
--- vim.keymap.set("n", "<leader>dn", ":cd ~/Library/Mobile\\ Documents/com~apple~CloudDocs/Notes <BAR> Yazi cwd<CR>",  {desc = "Notes"})
--- vim.keymap.set("n", "<leader>du", ":cd ~/Library/Mobile\\ Documents/com~apple~CloudDocs/Documents/Uni/f2025 <BAR> Yazi cwd<CR>", {desc = "Uni"})
--- vim.keymap.set("n", "<leader>dd", ":cd ~/Downloads <BAR> Yazi cwd<CR>", {desc = "Downloads"})
--- vim.keymap.set("n", "<leader>ds", ":cd ~/.config/nvim/lua/plugins <BAR> Yazi cwd<CR>",                               {desc = "Settings"})
 
 
 -- lock/unlock current buffer (nomodifiable, readonly)
@@ -309,14 +160,9 @@ local function toggle_lock()
   if vim.bo.modifiable then lock_buf() else unlock_buf() end
 end
 
--- vim.keymap.set("n", "<leader>bl", lock_buf,   { desc = "Lock buffer (nomodifiable)" })
--- vim.keymap.set("n", "<leader>bL", unlock_buf, { desc = "Unlock buffer" })
 vim.keymap.set("n", "<leader>bl", toggle_lock, { desc = "Toggle buffer lock" })
 
 
-
-
--- advanced controls
 -- vim.keymap.set("n", "<D-s>", ":source<CR>", { desc = "Source file" })
 -- vim.keymap.set("n", "<M-s>", ":write<CR>", { desc = "Save file" })
 
@@ -325,13 +171,10 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 
 -- vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "<C-d>", "<C-d>")
-vim.keymap.set("n", "<C-u>", "<C-u>")
 vim.keymap.set("n", "n", "nzv")
 vim.keymap.set("n", "N", "Nzv")
 
 vim.keymap.set("x", "<leader>p", "\"_dP")
-
 
 -- vim.keymap.set("n", "<leader>y", "\"+y")
 -- vim.keymap.set("n", "<leader>y", "\"+y")
@@ -375,18 +218,56 @@ vim.keymap.set("n", "q/", "<nop>")
 vim.keymap.set("n", "q?", "<nop>")
 vim.keymap.set("n", "s", "<nop>")
 vim.keymap.set("n", "gQ", "<nop>")
--- vim.keymap.set("n", "'", "<nop>")
--- vim.keymap.set("n", ".", "<nop>")
 vim.keymap.set("n", "qq", "<nop>")
+
+km("n","'", "<nop>")
+km("n","''", "<nop>")
+km("n","')", "<nop>")
+km("n","'(", "<nop>")
+km("n","'{", "<nop>")
+km("n","'}", "<nop>")
+km("n","'[", "<nop>")
+km("n","']", "<nop>")
+km("n","'<", "<nop>")
+km("n","'>", "<nop>")
+km("n","'.", "<nop>")
+km("n","'`", "<nop>")
+km("n","'^", "<nop>")
+
+km("n","`", "<nop>")
+km("n","`'", "<nop>")
+km("n","`)", "<nop>")
+km("n","`(", "<nop>")
+km("n","`{", "<nop>")
+km("n","`}", "<nop>")
+km("n","`[", "<nop>")
+km("n","`]", "<nop>")
+km("n","`<", "<nop>")
+km("n","`>", "<nop>")
+km("n","`.", "<nop>")
+km("n","``", "<nop>")
+km("n","`^", "<nop>")
+
+pcall(vim.keymap.del, "n", "`")
+pcall(vim.keymap.del, "n", "'")
+pcall(vim.keymap.del, "n", [[``]])
+pcall(vim.keymap.del, "n", [['']])
+
+
+-- km("n", "`", ":ToggleTerm<CR>")
+--
+km("n", [[``]], "<Nop>", { silent = true, nowait = true })
+km("n", [['']], "<Nop>", { silent = true, nowait = true })
+
+vim.keymap.set('n', '<tab>', '<C-^>')
+-- km("n", "`", "<cmd>ToggleTerm<CR>", { silent = true, nowait = true })
+km("n", "'", "<cmd>ToggleTerm<CR>", { silent = true, nowait = true })
 
 
 vim.keymap.set("n", "qq", "<C-w>o", { desc = "Close other windows" })
 vim.keymap.set("n", "<leader>q", ":q<CR>", { desc = "Close window" })
 
 local map = vim.keymap.set
-
--- map('n', 'J', function() vim.cmd('normal! ' .. (vim.v.count > 0 and vim.v.count or 5) .. 'j') end, {silent=true})
--- map('n', 'K', function() vim.cmd('normal! ' .. (vim.v.count > 0 and vim.v.count or 5) .. 'k') end, {silent=true})
 
 map({'n', 'v'}, 'm', function() vim.cmd('normal! ' .. (vim.v.count > 0 and vim.v.count or 15) .. 'j') end, {silent=true})
 map({'n', 'v'}, ',', function() vim.cmd('normal! ' .. (vim.v.count > 0 and vim.v.count or 15) .. 'k') end, {silent=true})
@@ -408,60 +289,21 @@ map({'n', 'v'}, ',', function() vim.cmd('normal! ' .. (vim.v.count > 0 and vim.v
 -- code editor bindings
 
 vim.keymap.set('n', 'K', vim.lsp.buf.hover) --definition on hover
-vim.keymap.set('n', '<leader>cs', vim.lsp.buf.signature_help)
-vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
-vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action)
-vim.keymap.set('n', '<leader>cr', vim.lsp.buf.references)
-vim.keymap.set('n', '<leader>cf', vim.lsp.buf.format)
-vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float)
-vim.keymap.set('n', '<leader>cp', vim.diagnostic.get_prev)
-vim.keymap.set('n', '<leader>cn', vim.diagnostic.get_next)
+vim.keymap.set('n', '<leader>cs', vim.lsp.buf.signature_help, {desc = "signature"})
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {desc = "rename variable"})
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {desc = "code action"})
+vim.keymap.set('n', '<leader>cr', vim.lsp.buf.references, {desc = "references"})
+vim.keymap.set('n', '<leader>cf', vim.lsp.buf.format, {desc = "format code"})
+vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float, {desc = "open diagnostics"})
+vim.keymap.set('n', '<leader>cp', vim.diagnostic.get_prev, {desc = "previous diagnostic"})
+vim.keymap.set('n', '<leader>cn', vim.diagnostic.get_next, {desc = "next diagnostic"})
 
 -- vim.keymap.set('n', '<leader>sd', vim.lsp.buf.definition, opts)
 -- vim.keymap.set('n', 'sD', vim.lsp.buf.declaration, opts)
 -- vim.keymap.set('n', 'si', vim.lsp.buf.implementation, opts)
 -- vim.keymap.set('n', 'sr', vim.lsp.buf.references, opts)
-
 -- vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, opts)
-
-
 -- vim.keymap.set("n", "<leader>cf", function() require("conform").format() end, { desc = "Format" })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -588,142 +430,6 @@ vim.keymap.set("n", "<leader>rr", function()
   shrink_current_window_by(15)            -- make the new terminal 15 lines smaller
   open_persistent_in_window(vim.api.nvim_get_current_win(), cmd)
 end, { noremap = true, silent = true, desc = "Run current file (safe reuse below)" })
-
-
-
-
-
-
-
-
-
-
-
-
--- vim.keymap.set("n", "<leader>rr", function()
---   vim.cmd("w") -- save file first
-
---   -- expand and escape paths safely
---   local file       = vim.fn.expand("%:p")
---     vim.cmd("cd " .. vim.fn.fnameescape(vim.fn.fnamemodify(file, ":p:h")))
---   local file_esc   = vim.fn.shellescape(file)
---   local root       = vim.fn.expand("%:p:r")
---   local root_esc   = vim.fn.shellescape(root)
---   local exe_name   = vim.fn.fnamemodify(root, ":t")
---   local exe_esc    = vim.fn.shellescape("./" .. exe_name)
-
---   -- decide run command by filetype (path-safe)
---   local ft = vim.bo.filetype
---   local cmd
---   if ft == "python" then
---     cmd = "PYTHONUNBUFFERED=1 python3 " .. file_esc
---   elseif ft == "lua" then
---     cmd = "lua " .. file_esc
---   elseif ft == "c" then
---     cmd = "gcc " .. file_esc .. " -o " .. root_esc .. " && " .. exe_esc
---   elseif ft == "cpp" then
---     cmd = "g++ " .. file_esc .. " -o " .. root_esc .. " && " .. exe_esc
---   elseif ft == "sh" then
---     cmd = "bash " .. file_esc
---   elseif ft == "javascript" then
---     cmd = "node " .. file_esc
---   elseif ft == "go" then
---     cmd = "go run " .. file_esc
---   elseif ft == "java" then
---     cmd = "javac " .. file_esc .. " && java " .. vim.fn.shellescape(exe_name)
---   elseif ft == "rust" then
---     cmd = "cargo run"
---   else
---     print("No run command set for filetype: " .. ft)
---     return
---   end
-
---   local cur_win = vim.api.nvim_get_current_win()
---   local user_shell = (vim.o.shell ~= "" and vim.o.shell) or (vim.env.SHELL or "bash")
-
---   local function open_persistent_in_window(winid, command)
---     vim.api.nvim_set_current_win(winid)
---     -- run command, then drop into an interactive shell so the terminal persists
---     vim.cmd("terminal " .. user_shell .. " -c " .. vim.fn.shellescape(command .. "; exec " .. user_shell))
---     -- mark as ours
---     vim.b.runner_owned = true
---   end
-
---   -- recursive helper to get the window directly below current (unchanged logic)
---   local function find_below(layout)
---     if layout[1] == "row" then
---       for _, child in ipairs(layout[2]) do
---         local found = find_below(child)
---         if found then return found end
---       end
---     elseif layout[1] == "col" then
---       for i, child in ipairs(layout[2]) do
---         if child[1] == "leaf" and child[2] == cur_win then
---           local nxt = layout[2][i+1]
---           if nxt and nxt[1] == "leaf" then
---             local buf = vim.api.nvim_win_get_buf(nxt[2])
---             if vim.bo[buf].buftype == "terminal" then
---               return nxt[2] -- return window id; we’ll decide how to use it
---             end
---           end
---         else
---           local found = find_below(child)
---           if found then return found end
---         end
---       end
---     end
---     return nil
---   end
-
---   local term_win = find_below(vim.fn.winlayout())
-
---   if term_win then
---     -- terminal exists below: reuse only if it's ours and idle; otherwise don't touch it
---     local buf = vim.api.nvim_win_get_buf(term_win)
---     local owned = false
---     do
---       local ok, val = pcall(vim.api.nvim_buf_get_var, buf, "runner_owned")
---       owned = ok and val or false
---     end
-
---     local chan = nil
---     do
---       local ok, val = pcall(vim.api.nvim_buf_get_var, buf, "terminal_job_id")
---       chan = ok and val or nil
---     end
-
---     if owned and chan and vim.fn.jobwait({ chan }, 0)[1] == -1 then
---       -- our interactive shell is running (idle): send command
---       vim.api.nvim_chan_send(chan, cmd .. "\n")
---       return
---     end
-
---     -- not owned or not running: open a fresh persistent shell in a NEW split
---     -- (avoid clobbering user's own terminal)
---     vim.cmd("belowright split")
---     open_persistent_in_window(vim.api.nvim_get_current_win(), cmd)
---     return
---   end
-
---   -- no terminal below: create one and keep it open
---   vim.cmd("belowright split")
---   open_persistent_in_window(vim.api.nvim_get_current_win(), cmd)
--- end, { noremap = true, silent = true, desc = "Run current file (safe reuse below)" })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

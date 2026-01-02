@@ -2,7 +2,6 @@
 -- vim.g.loaded_netrwPlugin = 1
 --
 --
-
 -- vim.o.title = true
 vim.o.winblend = 0
 vim.o.pumblend = 0
@@ -26,11 +25,40 @@ vim.opt.cmdheight = 1
 -- 	vim.opt.cmdheight = 0
 -- end
 
+vim.opt.viewoptions = { "folds" }
+vim.opt.viewdir = vim.fn.stdpath("state") .. "/view"
+
+
+local view_group = vim.api.nvim_create_augroup("RememberFolds", { clear = true })
+
+-- Save view when leaving a window/buffer
+vim.api.nvim_create_autocmd({ "BufWinLeave", "BufLeave" }, {
+  group = view_group,
+  callback = function(args)
+    if vim.bo[args.buf].buftype ~= "" then return end
+    if vim.bo[args.buf].modifiable == false then return end
+    if vim.fn.expand("%:p") == "" then return end
+    vim.cmd("silent! mkview!")
+  end,
+})
+
+-- Load view when entering a window
+vim.api.nvim_create_autocmd("BufWinEnter", {
+  group = view_group,
+  callback = function(args)
+    if vim.bo[args.buf].buftype ~= "" then return end
+    if vim.fn.expand("%:p") == "" then return end
+    vim.cmd("silent! loadview")
+  end,
+})
+
 vim.o.winborder = "rounded"
 -- vim.o.winblend = 10
 -- vim.o.scroll = 15
 -- vim.opt_global.scroll = 6
 
+-- vim.o.foldcolumn = '1'
+vim.o.foldenable = true
 vim.o.foldmethod = 'indent'
 vim.o.foldenable = true
 vim.opt.foldlevel = 99
@@ -70,6 +98,7 @@ vim.o.termguicolors = true
 vim.o.shortmess = "ltToOCFI"
 
 vim.o.mouse = 'a'
+-- vim.o.mouse = ''
 
 vim.o.undofile = true
 
@@ -98,15 +127,13 @@ vim.o.showmode = false
 vim.o.laststatus = 3
 -- vim.o.statusline = " %{%mode(1)%} %f%m %= %y %p%% %l:%c "
 -- vim.o.statusline = " %{%mode(1)%} %f%m %= %y %l:%c "
---
 -- vim.o.statusline = " %f%m %= %y %l:%c "
 -- vim.o.statusline = " %f%m %= %{&ff} %y %l:%c "
 -- vim.o.statusline = " %f%m %= %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %y %l:%c "
-
-
+-- vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c %{strftime('%H:%M')} "
 -- vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
 -- vim.o.statusline = " %{fnamemodify(getcwd(),':h:t').'/'.fnamemodify(getcwd(),':t')} %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
-vim.o.statusline = " %{get(b:,'gitsigns_head','') != '' ? (b:gitsigns_head.' ') : ''}%{fnamemodify(getcwd(),':h:t').'/'.fnamemodify(getcwd(),':t')} %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
+-- vim.o.statusline = " %{get(b:,'gitsigns_head','') != '' ? (b:gitsigns_head.' ') : ''}%{fnamemodify(getcwd(),':h:t').'/'.fnamemodify(getcwd(),':t')} %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
 
 -- branch for *current working directory* (not current buffer)
 _G._stl_cwd = nil
@@ -131,21 +158,17 @@ _G.stl_cwd_branch = function()
   return _G._stl_cwd_branch
 end
 
--- vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
---   callback = function() _G.update_cwd_branch() end,
--- })
 
 vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged", "FocusGained", "TermClose" }, {
   callback = function() _G.update_cwd_branch() end,
 })
 
-vim.api.nvim_create_autocmd({ "ShellCmdPost" }, {
+vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged", "FocusGained", "ShellCmdPost", "TermLeave" }, {
   callback = function() _G.update_cwd_branch() end,
 })
 
 
 vim.o.statusline = " %{%v:lua.stl_cwd_branch()%}%{fnamemodify(getcwd(),':h:t').'/'.fnamemodify(getcwd(),':t')} %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c "
--- vim.o.statusline = " %f%m %= %y %{&fenc != '' ? &fenc : &enc}%{&bomb?'+BOM':''} %{&ff} %l:%c %{strftime('%H:%M')} "
 
 
 

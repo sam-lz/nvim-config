@@ -120,10 +120,15 @@ return {
   {
     "lewis6991/gitsigns.nvim",
   },
+  {
+    "tpope/vim-commentary",
+  },
   -- {
   --     "tpope/vim-fugitive",
   -- },
-
+  -- {
+  --     "vimpostor/vim-tpipeline",
+  -- },
 
   {
     'akinsho/toggleterm.nvim',
@@ -147,6 +152,17 @@ return {
   },
 
   { 'Civitasv/cmake-tools.nvim', opts = {} },
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = { 'kevinhwang91/promise-async' },
+    config = function()
+      require('ufo').setup({
+        provider_selector = function(bufnr, filetype, buftype)
+          return { 'treesitter', 'indent' }
+        end
+      })
+    end
+  },
 
   {
     "S1M0N38/love2d.nvim",
@@ -163,11 +179,56 @@ return {
 
 
 
+  -- {
+  --   "gpanders/nvim-parinfer",
+  --   config = function()
+  --     vim.g.parinfer_filetypes = {
+  --       "dune",
+  --       "scheme",
+  --       "query",
+  --       "racket",
+  --     }
+  --   end,
+  -- },
 
 
 
 
 
+  -- {
+  --   "folke/zen-mode.nvim",
+  --   config = function()
+  --     require("zen-mode").setup {
+  --       window = {
+  --         backdrop = 1,
+  --         height = 0.9,
+  --         width = 0.8,
+  --         options = {
+  --           number = false,
+  --           relativenumber = false,
+  --           signcolumn = "no",
+  --           list = false,
+  --           cursorline = false,
+  --         },
+  --       },
+  --     }
+
+  --     require("twilight").setup {
+  --       context = -1,
+  --       treesitter = true,
+  --     }
+  --   end,
+  -- },
+
+  -- {
+  --   "folke/twilight.nvim",
+  --   config = function()
+  --     require("twilight").setup {
+  --       context = -1,
+  --       treesitter = true,
+  --     }
+  --   end,
+  -- },
 
 
 

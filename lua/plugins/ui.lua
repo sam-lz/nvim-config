@@ -1,52 +1,52 @@
 return {
   -- {
-    --   'nvim-lualine/lualine.nvim',
-    --   dependencies = { 'nvim-tree/nvim-web-devicons' },
-    --   opts = {
-      --     options = {
-        --       icons_enabled = false,
-        --       theme = 'auto',
-        --       component_separators = { left = '|', right = '|' },
-        --       section_separators = { left = '', right = '' },
-        --       refresh = {
-          --         statusline = 100,
-          --         tabline    = 100,
-          --         winbar     = 100,
-          --       },
-          --     },
-          --     sections = {
-            --       lualine_a = {},
-            --       lualine_b = {},
-            --       -- 'diff', 'diagnostics',
-            --       -- {function()
-              --       -- return vim.fn.fnamemodify(vim.fn.getcwd(), ":t:h")
-              --       -- end,
-              --       lualine_c = {{'branch'}, { function()
-                --         local cwd    = vim.fn.getcwd()
-                --         local dir    = vim.fn.fnamemodify(cwd, ":t")   -- current dir
-                --         local parent = vim.fn.fnamemodify(cwd, ":h:t") -- parent dir
-                --         if parent ~= "" then
-                --           return parent .. "/" .. dir
-                --         else
-                --           return dir
-                --         end
-                --       end, }, { 'filename', path = 1, shorting_target = 80 } },
-                --       lualine_x = { { 'location', padding = { left = 1, right = 1 } },
-                --       { 'filetype', padding = { left = 1, right = 1 } },
-                --       { 'encoding', padding = { left = 1, right = 1 } },
-                --       { 'fileformat', padding = { left = 1, right = 1 } },
-                --       {
-                  --         function()
-                    --           return os.date("%H:%M")
-                    --         end,
-                    --       },
+  --   'nvim-lualine/lualine.nvim',
+  --   dependencies = { 'nvim-tree/nvim-web-devicons' },
+  --   opts = {
+  --     options = {
+  --       icons_enabled = false,
+  --       theme = 'auto',
+  --       component_separators = { left = '|', right = '|' },
+  --       section_separators = { left = '', right = '' },
+  --       refresh = {
+  --         statusline = 100,
+  --         tabline    = 100,
+  --         winbar     = 100,
+  --       },
+  --     },
+  --     sections = {
+  --       lualine_a = {},
+  --       lualine_b = {},
+  --       -- 'diff', 'diagnostics',
+  --       -- {function()
+  --       -- return vim.fn.fnamemodify(vim.fn.getcwd(), ":t:h")
+  --       -- end,
+  --       lualine_c = {{'branch'}, { function()
+  --         local cwd    = vim.fn.getcwd()
+  --         local dir    = vim.fn.fnamemodify(cwd, ":t")   -- current dir
+  --         local parent = vim.fn.fnamemodify(cwd, ":h:t") -- parent dir
+  --         if parent ~= "" then
+  --           return parent .. "/" .. dir
+  --         else
+  --           return dir
+  --         end
+  --       end, }, { 'filename', path = 1, shorting_target = 80 } },
+  --       lualine_x = { { 'location', padding = { left = 1, right = 1 } },
+  --       { 'filetype', padding = { left = 1, right = 1 } },
+  --       { 'encoding', padding = { left = 1, right = 1 } },
+  --       { 'fileformat', padding = { left = 1, right = 1 } },
+  --       {
+  --         function()
+  --           return os.date("%H:%M")
+  --         end,
+  --       },
 
-                    --     },
-                    --       lualine_y = {},
-                    --       lualine_z = {},
-                    --     },
-                    --   },
-                    -- },
+  --     },
+  --       lualine_y = {},
+  --       lualine_z = {},
+  --     },
+  --   },
+  -- },
   {
     "nvim-tree/nvim-web-devicons",
   },
@@ -96,14 +96,9 @@ return {
       },
     },
   },
-
-  {
-    "tpope/vim-commentary",
-  },
-  {"andreasvc/vim-256noir"},
   {
     "craftzdog/solarized-osaka.nvim",
-    lazy = true,
+    lazy = false,
     priority = 1000,
     opts = function()
       return {
@@ -129,6 +124,19 @@ return {
     }
   },
   {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    config = function()
+      require("rose-pine").setup({
+        styles = {
+          bold = true,
+          italic = true,
+          transparency = true,
+        },
+      })
+    end
+  },
+  {
     "killitar/obscure.nvim",
     lazy = false,
     priority = 1000,
@@ -137,73 +145,17 @@ return {
     }
   },
   {
-    "e-ink-colorscheme/e-ink.nvim",
+    "ptdewey/monalisa-nvim",
     priority = 1000,
-    config = function ()
-      -- require("e-ink").setup()
-      -- vim.cmd.colorscheme "e-ink"
-
-      -- choose light mode or dark mode
-      -- vim.opt.background = "dark"
-      -- vim.opt.background = "light"
-      --
-      -- or do
-      -- :set background=dark
-      -- :set background=light
-      -- transparency
-      -- local set_hl = vim.api.nvim_set_hl
-      -- local mono = require("e-ink.palette").mono()
-
-      -- transparent only when `:set background=dark`
-      -- if vim.o.background == "dark" then
-      --    set_hl(0, "Normal", { fg = mono[12], bg = "NONE" })
-      -- end
-    end
   },
-  -- {
-    --     "ptdewey/monalisa-nvim",
-    --     priority = 1000,
-    -- },
-    -- {
-      --     "cocopon/iceberg.vim",
-      -- },
-      -- { 'datsfilipe/vesper.nvim' },
-      --
-      -- { "fcpg/vim-fahrenheit", },
-      --
-      -- Using lazy.nvim
-      -- {
-        --     "cdmill/neomodern.nvim",
-        --     lazy = false,
-        --     priority = 1000,
-        --     config = function()
-          --         require("neomodern").setup({
-            --             -- optional configuration here
-            --         })
-            --         require("neomodern").load()
-            --     end,
-            -- },
-            -- {
-              --     "gabrielfrimodig/seashell.nvim",
-              --     lazy = false,
-              --     priority = 1000,
-              -- },
-              -- {
-                --     "thesimonho/kanagawa-paper.nvim",
-                --     lazy = false,
-                --     priority = 1000,
-                --     opts = {},
-                -- },
-
-                -- {
-                  --     "jwbaldwin/oscura.nvim",
-                  --     lazy = false,
-                  --     priority = 1000,
-                  -- },
-  -- {
-  --     "vimpostor/vim-tpipeline",
-  -- },
-
+  --
+  -- { "fcpg/vim-fahrenheit", },
+  --
+  {
+    "gabrielfrimodig/seashell.nvim",
+    lazy = false,
+    priority = 1000,
+  },
 
   -- {
   --   "b0o/incline.nvim",
@@ -270,7 +222,11 @@ return {
   },
 
 
-
+  -- {
+  --   "folke/drop.nvim",
+  --   opts = {
+  --   }
+  -- },
 
 
 

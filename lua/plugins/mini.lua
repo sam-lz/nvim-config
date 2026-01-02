@@ -53,10 +53,10 @@ return {
               { mode = 'x', keys = 'g' },
 
               -- Marks
-              { mode = 'n', keys = "'" },
-              { mode = 'n', keys = '`' },
-              { mode = 'x', keys = "'" },
-              { mode = 'x', keys = '`' },
+              -- { mode = 'n', keys = "'" },
+              -- { mode = 'n', keys = '`' },
+              -- { mode = 'x', keys = "'" },
+              -- { mode = 'x', keys = '`' },
 
               -- Registers
               { mode = 'n', keys = '"' },
