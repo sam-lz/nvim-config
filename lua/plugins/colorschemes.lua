@@ -31,6 +31,51 @@ return {
   -- "uloco/bluloco.nvim",
   { "LuRsT/austere.vim" },
   { "p00f/alabaster.nvim" },
+  {
+    "mellow-theme/mellow.nvim",
+    config = function()
+      vim.g.mellow_transparent = true
+    end
+  },
+  {
+    "masisz/wisteria.nvim",
+    name = "wisteria",
+    opts = {
+      transparent = true,
+    },
+  },
+  {
+    "AetherSyscall/AetherAmethyst.nvim",
+    priority = 1000,
+    config = function()
+      require("aetheramethyst").setup({
+        transparent = false,
+        styles = {
+          comments = { italic = true },
+          keywords = { italic = true },
+          functions = { bold = true },
+          variables = {},
+        }
+      })
+    end,
+  },
+  {
+    "uhs-robert/oasis.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "dybdeskarphet/gruvbox-minimal.nvim",
+    config = function()
+      require("gruvbox-minimal").setup({
+        transparent = false,    -- Sets all the major background values to 'none'
+        italic_comments = true, -- Italic comments
+        contrast = "low",       -- Available values: "high", "low"
+        theme = "dark",         -- Available values: "dark", "light"
+        accent = "red",         -- Changes the definition (functions, structs etc.) colors. Available values: "red", "orange", "yellow", "green", "cyan", "blue", "magenta"
+      })
+    end
+  }
   -- {
   --   "zenbones-theme/zenbones.nvim",
   --   -- Optionally install Lush. Allows for more configuration or extending the colorscheme

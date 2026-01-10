@@ -56,6 +56,19 @@ km("n", "F", function()
 end, { desc = "Neo-tree: root at file dir" })
 
 
+km("n", "<C-f>", function()
+  if vim.bo.buftype ~= "" then
+    return
+  end
+  require("neo-tree.command").execute({
+    -- action = "show",
+    toggle = false,
+    source = "filesystem",
+    position = "current",
+    reveal = false,
+    dir = vim.fn.getcwd(),
+  })
+end, { desc = "Neo-tree: root at file dir" })
 
 -- file navigation
 
@@ -76,8 +89,10 @@ vim.keymap.set('n', '<leader>?', builtin.help_tags, { desc = 'Telescope help tag
 
 vim.keymap.set({"x", "v"}, "<leader>s", [[<esc>:'<,'>s/]], {desc = "Enter substitute mode in selection"})
 
-vim.keymap.set("n", "L", "20zl")
-vim.keymap.set("n", "H", "20zh")
+vim.keymap.set("n", "<C-,>", "25zl")
+vim.keymap.set("n", "<C-m>", "25zh")
+km({"n", "v"}, "H", "0")
+km({"n", "v"}, "L", "$")
 
 
 vim.keymap.set("x", "ss", function()
@@ -248,6 +263,8 @@ km("n","`.", "<nop>")
 km("n","``", "<nop>")
 km("n","`^", "<nop>")
 
+-- km({"n", "v", "x"},".", "<nop>")
+
 pcall(vim.keymap.del, "n", "`")
 pcall(vim.keymap.del, "n", "'")
 pcall(vim.keymap.del, "n", [[``]])
@@ -264,8 +281,11 @@ vim.keymap.set('n', '<tab>', '<C-^>')
 km("n", "'", "<cmd>ToggleTerm<CR>", { silent = true, nowait = true })
 
 
-vim.keymap.set("n", "qq", "<C-w>o", { desc = "Close other windows" })
-vim.keymap.set("n", "<leader>q", ":q<CR>", { desc = "Close window" })
+for _,m in ipairs({'n','v','x','o','i','c','t','s'}) do for _,km in ipairs(vim.api.nvim_get_keymap(m)) do if (km.lhs or ''):sub(1,1) == 'q' then pcall(vim.keymap.del, m, km.lhs) end end end
+for _,m in ipairs({'n','v','x','o','i','c','t','s'}) do for _,km in ipairs(vim.api.nvim_get_keymap(m)) do if (km.lhs or ''):sub(1,1) == '`' then pcall(vim.keymap.del, m, km.lhs) end end end
+
+vim.keymap.set("n", "<leader>q", "<C-w>o", { silent = true, desc = "Close other windows" })
+vim.keymap.set("n", "q", ":q<CR>", { silent = true, desc = "Close window" })
 
 local map = vim.keymap.set
 

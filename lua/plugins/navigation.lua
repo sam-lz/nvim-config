@@ -375,6 +375,10 @@ return {
       -- vim.g.loaded_netrwPlugin = 1
     end,
   },
+  -- {
+  --   "nvim-tree/nvim-tree.lua",
+  --   opts = {},
+  -- },
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
