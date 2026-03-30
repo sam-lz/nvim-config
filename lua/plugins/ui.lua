@@ -15,13 +15,22 @@ return {
         },
       },
       sections = {
-        lualine_a = {},
-        lualine_b = {},
+        lualine_a = {
+          -- {'branch'},
+        },
+        lualine_b = {
+          -- {'branch'},
+
+        },
         -- 'diff', 'diagnostics',
         -- {function()
         -- return vim.fn.fnamemodify(vim.fn.getcwd(), ":t:h")
         -- end,
-        lualine_c = { { 'branch' }, { function()
+        lualine_c = {
+          { 'branch' },
+          {'diagnostics'},
+          -- {'diff'},
+          { function()
           local cwd    = vim.fn.getcwd()
           local dir    = vim.fn.fnamemodify(cwd, ":t")   -- current dir
           local parent = vim.fn.fnamemodify(cwd, ":h:t") -- parent dir
@@ -42,8 +51,24 @@ return {
           },
 
         },
-        lualine_y = {},
-        lualine_z = {},
+        lualine_y = {
+
+          -- {
+          --   function()
+          --     return os.date("%H:%M")
+          --   end,
+          -- },
+
+        },
+        lualine_z = {
+
+          -- {
+          --   function()
+          --     return os.date("%H:%M")
+          --   end,
+          -- },
+
+        },
       },
     },
   },

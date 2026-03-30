@@ -137,7 +137,7 @@ return {
       require("toggleterm").setup({
         start_in_insert = false,
         autochdir = true,
-        direction = 'float',
+        direction = 'horizontal',
         float_opts = {
           border = 'shadow',
           width = function()

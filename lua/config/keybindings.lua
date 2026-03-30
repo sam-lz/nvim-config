@@ -24,6 +24,9 @@ end,
 { desc = 'cd to current file dir'})
 
 
+vim.keymap.set('n', "<localleader>t", ":TypstPreview<CR>")
+
+
 
 -- km("n", "``", "za")
 

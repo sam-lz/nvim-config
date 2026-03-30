@@ -18,6 +18,7 @@ return {
   -- "miikanissi/modus-themes.nvim",
   -- "rebelot/kanagawa.nvim",
   { "gremble0/yellowbeans.nvim" },
+  { "blazkowolf/gruber-darker.nvim" },
   -- "rockyzhang24/arctic.nvim",
   { "folke/tokyonight.nvim" },
   { "Shatur/neovim-ayu" },

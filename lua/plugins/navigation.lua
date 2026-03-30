@@ -16,12 +16,12 @@ return {
         },
       },
     },
-    -- keys = {
+    keys = {
     --     { "<leader>dA", function() require("workspaces").add(vim.fn.getcwd()) end, desc = "Workspace: add CWD" },
-    --     { "<leader>dw", function() require("telescope").extensions.workspaces.workspaces() end, desc = "Workspace: switch" },
+           { "<leader>e", function() require("telescope").extensions.workspaces.workspaces() end, desc = "Workspace: switch" },
     --     -- { "<leader>dr", function() require("workspaces").rename() end, desc = "Workspace: rename" },
     --     { "<leader>dR", function() require("workspaces").remove() end, desc = "Workspace: remove" },
-    -- },
+    },
   },
   {
     "ThePrimeagen/harpoon",

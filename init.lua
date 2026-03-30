@@ -4,7 +4,11 @@ require("config.keybindings")
 
 vim.opt.signcolumn = "no"
 
-vim.cmd.colorscheme("yorumi")
+vim.cmd.colorscheme("flexoki-dark")
+
+-- transparency 
+vim.cmd('hi Normal guibg=NONE ctermbg=NONE')
+
 
 -- vim.cmd("hi! StatusLine gui=bold cterm=bold")
 
