@@ -25,6 +25,7 @@ end,
 
 
 vim.keymap.set('n', "<localleader>t", ":TypstPreview<CR>")
+vim.keymap.set('n', "<localleader>o", ":Outline<CR>")
 
 
 
@@ -42,7 +43,7 @@ end)
 
 -- km("n", "<leader>dy", "<cmd>Yazi cwd<cr>")
 -- neotree bindings
-km("n", "F", function()
+km("n", "<C-f>", function()
   if vim.bo.buftype ~= "" then
     return
   end
@@ -59,7 +60,7 @@ km("n", "F", function()
 end, { desc = "Neo-tree: root at file dir" })
 
 
-km("n", "<C-f>", function()
+km("n", "F", function()
   if vim.bo.buftype ~= "" then
     return
   end
