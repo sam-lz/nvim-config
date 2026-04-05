@@ -4,10 +4,14 @@ require("config.keybindings")
 
 vim.opt.signcolumn = "no"
 
-vim.cmd.colorscheme("flexoki-dark")
+vim.cmd.colorscheme("vague")
+
+-- flexoki-dark
+-- yellowbeans
+-- vague
 
 -- transparency 
-vim.cmd('hi Normal guibg=NONE ctermbg=NONE')
+-- vim.cmd('hi Normal guibg=NONE ctermbg=NONE')
 
 
 -- vim.cmd("hi! StatusLine gui=bold cterm=bold")

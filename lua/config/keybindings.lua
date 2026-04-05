@@ -60,19 +60,19 @@ km("n", "<C-f>", function()
 end, { desc = "Neo-tree: root at file dir" })
 
 
-km("n", "F", function()
-  if vim.bo.buftype ~= "" then
-    return
-  end
-  require("neo-tree.command").execute({
-    -- action = "show",
-    toggle = false,
-    source = "filesystem",
-    position = "current",
-    reveal = false,
-    dir = vim.fn.getcwd(),
-  })
-end, { desc = "Neo-tree: root at file dir" })
+-- km("n", "F", function()
+--   if vim.bo.buftype ~= "" then
+--     return
+--   end
+--   require("neo-tree.command").execute({
+--     -- action = "show",
+--     toggle = false,
+--     source = "filesystem",
+--     position = "current",
+--     reveal = false,
+--     dir = vim.fn.getcwd(),
+--   })
+-- end, { desc = "Neo-tree: root at file dir" })
 
 -- file navigation
 
@@ -131,6 +131,11 @@ vim.keymap.set("n", "tl", ":tabnext<CR>", { silent = true })
 vim.keymap.set("n", "th", ":tabprevious<CR>", { silent = true })
 vim.keymap.set("n", "tH", ":-tabmove<CR>", { silent = true })
 vim.keymap.set("n", "tL", ":+tabmove<CR>", { silent = true })
+
+vim.keymap.set("n", "<C-n>", ":tabnew<CR>", { silent = true })
+-- vim.keymap.set("n", "<C-l>", ":tabnext<CR>", { silent = true })
+-- vim.keymap.set("n", "<C-h>", ":tabprevious<CR>", { silent = true })
+
 
 vim.keymap.set('n', 'tt', function()
   local prev = vim.fn.tabpagenr()

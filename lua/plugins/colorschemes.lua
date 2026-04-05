@@ -76,7 +76,24 @@ return {
         accent = "red",         -- Changes the definition (functions, structs etc.) colors. Available values: "red", "orange", "yellow", "green", "cyan", "blue", "magenta"
       })
     end
-  }
+  },
+
+
+  {
+    "metalelf0/jellybeans-nvim",
+    dependencies = {
+       'rktjmp/lush.nvim',
+    }
+  },
+
+  { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
+
+  {"tiagovla/tokyodark.nvim"},
+
+
+  { 'datsfilipe/vesper.nvim' },
+
+  {"andreasvc/vim-256noir"},
   -- {
   --   "zenbones-theme/zenbones.nvim",
   --   -- Optionally install Lush. Allows for more configuration or extending the colorscheme
