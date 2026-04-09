@@ -23,12 +23,9 @@ return {
   { "folke/tokyonight.nvim" },
   { "Shatur/neovim-ayu" },
   -- {"RRethy/base16-nvim"},
-  { "metalelf0/base16-black-metal-scheme" },
   -- "xero/miasma.nvim",
   -- "cocopon/iceberg.vim",
   { "kepano/flexoki-neovim" },
-  { "ntk148v/komau.vim" },
-  -- { "catppuccin/nvim", name = "catppuccin" },
   -- "uloco/bluloco.nvim",
   { "LuRsT/austere.vim" },
   { "p00f/alabaster.nvim" },
@@ -37,28 +34,6 @@ return {
     config = function()
       vim.g.mellow_transparent = true
     end
-  },
-  {
-    "masisz/wisteria.nvim",
-    name = "wisteria",
-    opts = {
-      transparent = true,
-    },
-  },
-  {
-    "AetherSyscall/AetherAmethyst.nvim",
-    priority = 1000,
-    config = function()
-      require("aetheramethyst").setup({
-        transparent = false,
-        styles = {
-          comments = { italic = true },
-          keywords = { italic = true },
-          functions = { bold = true },
-          variables = {},
-        }
-      })
-    end,
   },
   {
     "uhs-robert/oasis.nvim",
@@ -90,10 +65,6 @@ return {
 
   {"tiagovla/tokyodark.nvim"},
 
-
-  { 'datsfilipe/vesper.nvim' },
-
-  {"andreasvc/vim-256noir"},
   -- {
   --   "zenbones-theme/zenbones.nvim",
   --   -- Optionally install Lush. Allows for more configuration or extending the colorscheme

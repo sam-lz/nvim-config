@@ -1,6 +1,8 @@
 require("config.options")
+vim.g.notebook_workflow = vim.g.notebook_workflow or "markdown"
 require("config.lazy.lazy")
 require("config.keybindings")
+require("config.notebooks").setup()
 
 vim.opt.signcolumn = "no"
 
@@ -38,6 +40,18 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
 
 
+vim.api.nvim_create_autocmd("User", {
+  pattern = "MoltenOutput",
+  callback = function()
+    vim.schedule(function()
+      vim.cmd("redrawstatus")
+    end)
+  end,
+})
+
+
+
+
 if vim.g.neovide then
   -- vim.cmd.colorscheme("vague")
   vim.o.guifont = "OverpassM Nerd Font Mono SemBd:h16"
@@ -45,3 +59,5 @@ if vim.g.neovide then
   vim.g.neovide_scroll_animation_length = 0.0
   vim.g.neovide_fullscreen = false
 end
+
+

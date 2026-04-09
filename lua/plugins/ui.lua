@@ -181,11 +181,6 @@ return {
   --
   -- { "fcpg/vim-fahrenheit", },
   --
-  {
-    "gabrielfrimodig/seashell.nvim",
-    lazy = false,
-    priority = 1000,
-  },
 
   -- {
   --   "b0o/incline.nvim",

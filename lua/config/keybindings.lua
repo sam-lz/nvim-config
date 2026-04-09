@@ -28,6 +28,205 @@ vim.keymap.set('n', "<localleader>t", ":TypstPreview<CR>")
 vim.keymap.set('n', "<localleader>o", ":Outline<CR>")
 
 
+-- vim.keymap.set("n", "<localleader>mi", ":MoltenInit<CR>",
+--     { silent = true, desc = "Initialize the plugin" })
+-- vim.keymap.set("n", "<localleader><localleader>", ":QuartoSend<CR>", {silent=true})
+-- vim.keymap.set("n", "<localleader>e", ":MoltenEvaluateOperator<CR>",
+--     { silent = true, desc = "run operator selection" })
+-- vim.keymap.set("n", "<localleader>rr", ":MoltenReevaluateCell<CR>",
+--     { silent = true, desc = "re-evaluate cell" })
+-- vim.keymap.set("n", "<localleader>rd", ":MoltenDelete<CR>",
+--     { silent = true, desc = "molten delete cell" })
+-- vim.keymap.set("n", "<localleader>oh", ":MoltenHideOutput<CR>",
+--     { silent = true, desc = "hide output" })
+-- vim.keymap.set("n", "<localleader>os", ":noautocmd MoltenEnterOutput<CR>",
+--     { silent = true, desc = "show/enter output" })
+
+local function notebook_dir(bufnr)
+  local name = vim.api.nvim_buf_get_name(bufnr)
+  if name == "" then
+    return nil
+  end
+
+  return vim.fn.fnamemodify(name, ":p:h")
+end
+
+local function python_kernel_id(bufnr)
+  local kernels = vim.fn.MoltenRunningKernels(true)
+  local stored = vim.b[bufnr].molten_python_kernel_id
+
+  if stored and vim.tbl_contains(kernels, stored) then
+    return stored
+  end
+
+  for _, kernel_id in ipairs(kernels) do
+    if kernel_id == "python3" or kernel_id:match("^python") then
+      vim.b[bufnr].molten_python_kernel_id = kernel_id
+      return kernel_id
+    end
+  end
+
+  return nil
+end
+
+local function sync_python_kernel_to_notebook(bufnr)
+  local dir = notebook_dir(bufnr)
+  if not dir then
+    return true
+  end
+
+  local kernel_id = python_kernel_id(bufnr)
+  if not kernel_id then
+    return true
+  end
+
+  if vim.b[bufnr].molten_synced_dir == dir and vim.b[bufnr].molten_synced_kernel_id == kernel_id then
+    return true
+  end
+
+  local code = string.format(
+    "import os,sys; _p=%s; os.chdir(_p); sys.path=[x for x in sys.path if x != _p]; sys.path.insert(0,_p)",
+    vim.json.encode(dir)
+  )
+
+  vim.api.nvim_buf_call(bufnr, function()
+    vim.api.nvim_cmd({
+      cmd = "MoltenEvaluateArgument",
+      args = { kernel_id, code },
+    }, {})
+  end)
+
+  vim.b[bufnr].molten_synced_dir = dir
+  vim.b[bufnr].molten_synced_kernel_id = kernel_id
+  return true
+end
+
+local function run_with_notebook_kernel(action)
+  local bufnr = vim.api.nvim_get_current_buf()
+
+  local function execute()
+    if not vim.api.nvim_buf_is_valid(bufnr) then
+      return
+    end
+
+    vim.api.nvim_buf_call(bufnr, function()
+      sync_python_kernel_to_notebook(bufnr)
+      action()
+    end)
+  end
+
+  if #vim.fn.MoltenRunningKernels(true) == 0 then
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "MoltenKernelReady",
+      once = true,
+      callback = function(ev)
+        vim.schedule(function()
+          if not vim.api.nvim_buf_is_valid(bufnr) then
+            return
+          end
+          if ev.data and ev.data.kernel_id and ev.data.kernel_id:match("^python") then
+            vim.b[bufnr].molten_python_kernel_id = ev.data.kernel_id
+          end
+          execute()
+        end)
+      end,
+    })
+
+    vim.cmd("MoltenInit python3")
+    return
+  end
+
+  execute()
+end
+
+vim.api.nvim_create_autocmd("User", {
+  pattern = "MoltenKernelReady",
+  callback = function(ev)
+    local bufnr = vim.api.nvim_get_current_buf()
+    if not vim.api.nvim_buf_is_valid(bufnr) then
+      return
+    end
+
+    if ev.data and ev.data.kernel_id and ev.data.kernel_id:match("^python") then
+      vim.b[bufnr].molten_python_kernel_id = ev.data.kernel_id
+    end
+
+    sync_python_kernel_to_notebook(bufnr)
+  end,
+})
+
+vim.keymap.set("n", "<localleader><localleader>", function()
+  run_with_notebook_kernel(function()
+    vim.cmd("QuartoSend")
+  end)
+end, { silent = true, desc = "Init python3 if needed, then QuartoSend" })
+
+vim.keymap.set("n", "<localleader>l", function()
+  run_with_notebook_kernel(function()
+    vim.cmd("MoltenEvaluateLine")
+  end)
+end, { silent = true, desc = "Evaluate line" })
+
+vim.keymap.set("v", "<localleader>r", function()
+  run_with_notebook_kernel(function()
+    vim.cmd("MoltenEvaluateVisual")
+    vim.schedule(function()
+      pcall(vim.cmd, "normal! gv")
+    end)
+  end)
+end, { silent = true, desc = "Evaluate visual selection" })
+
+local function insert_python_cell()
+  local row = vim.api.nvim_win_get_cursor(0)[1]
+  local cell = { "```python", "", "```" }
+  vim.api.nvim_buf_set_lines(0, row, row, false, cell)
+end
+
+local function current_fenced_cell_range()
+  local row = vim.api.nvim_win_get_cursor(0)[1]
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local start_row = nil
+
+  for i, line in ipairs(lines) do
+    if line:match("^```") then
+      if start_row == nil then
+        start_row = i
+      else
+        if row >= start_row and row <= i then
+          return start_row, i
+        end
+        start_row = nil
+      end
+    end
+  end
+end
+
+local function clear_current_cell_output()
+  local ok = pcall(vim.cmd, "MoltenDelete")
+  if not ok then
+    vim.notify("MoltenDelete is unavailable for this buffer.", vim.log.levels.WARN)
+  end
+end
+
+local function delete_current_fenced_cell()
+  local start_row, end_row = current_fenced_cell_range()
+  if not start_row then
+    vim.notify("Cursor is not inside a fenced code cell.", vim.log.levels.WARN)
+    return
+  end
+
+  pcall(vim.cmd, "MoltenDelete")
+  vim.api.nvim_buf_set_lines(0, start_row - 1, end_row, false, {})
+  local target_row = math.min(start_row, vim.api.nvim_buf_line_count(0))
+  vim.api.nvim_win_set_cursor(0, { math.max(target_row, 1), 0 })
+end
+
+vim.keymap.set("n", "<localleader>=", insert_python_cell,
+  { silent = true, desc = "Insert ```python cell" })
+vim.keymap.set("n", "<localleader>-", clear_current_cell_output,
+  { silent = true, desc = "Clear current cell output" })
+vim.keymap.set("n", "<localleader>d", delete_current_fenced_cell,
+  { silent = true, desc = "Delete current fenced cell" })
 
 -- km("n", "``", "za")
 

@@ -5,3 +5,7 @@ vim.opt_local.linebreak = true
 
 vim.keymap.set("n", "j", "gj", { buffer = true })
 vim.keymap.set("n", "k", "gk", { buffer = true })
+
+
+
+require("quarto").activate()
