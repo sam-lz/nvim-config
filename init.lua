@@ -1,8 +1,6 @@
 require("config.options")
-vim.g.notebook_workflow = vim.g.notebook_workflow or "markdown"
 require("config.lazy.lazy")
 require("config.keybindings")
-require("config.notebooks").setup()
 
 vim.opt.signcolumn = "no"
 
@@ -59,5 +57,4 @@ if vim.g.neovide then
   vim.g.neovide_scroll_animation_length = 0.0
   vim.g.neovide_fullscreen = false
 end
-
 

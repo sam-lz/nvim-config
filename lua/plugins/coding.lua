@@ -1,5 +1,3 @@
-local notebook_workflow = vim.g.notebook_workflow or "markdown"
-
 local function empty_python_notebook()
   return vim.json.encode({
     cells = {},
@@ -98,20 +96,21 @@ return {
     lazy = false,
     init = function()
       vim.g.molten_auto_init_behavior = "raise"
+      vim.g.molten_cover_empty_lines = true
+      vim.g.molten_auto_open_output = true
       vim.g.molten_image_provider = "image.nvim"
-      vim.g.molten_image_location = "virt" --"both" -- or "virt" if you want only inline
+      vim.g.molten_image_location = "virt"
+      vim.g.molten_output_virt_lines = true
       vim.g.molten_virt_text_output = true
-      -- vim.g.molten_virt_lines_off_by_1 = true
+      vim.g.molten_virt_lines_off_by_1 = true
       vim.g.molten_wrap_output = true
 
-      -- vim.g.molten_auto_open_output = true
       -- vim.g.molten_output_win_hide_on_leave = false
     end,
   },
 
   {
     "GCBallesteros/jupytext.nvim",
-    enabled = notebook_workflow == "ipynb",
     lazy = false,
     config = function(_, opts)
       setup_jupytext(opts)

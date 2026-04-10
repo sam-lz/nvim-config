@@ -221,12 +221,132 @@ local function delete_current_fenced_cell()
   vim.api.nvim_win_set_cursor(0, { math.max(target_row, 1), 0 })
 end
 
+local function export_markdown_to_notebook()
+  local markdown = vim.api.nvim_buf_get_name(0)
+  if markdown == "" then
+    vim.notify("No file is associated with this buffer.", vim.log.levels.WARN)
+    return
+  end
+
+  if not markdown:match("%.md$") and not markdown:match("%.qmd$") then
+    vim.notify("This export binding only works from markdown or quarto files.", vim.log.levels.WARN)
+    return
+  end
+
+  if vim.fn.executable("jupytext") ~= 1 then
+    vim.notify("jupytext is not available on PATH.", vim.log.levels.ERROR)
+    return
+  end
+
+  if vim.bo.modified then
+    vim.cmd("write")
+  end
+
+  markdown = vim.fn.resolve(vim.fn.expand(markdown))
+  local ipynb = vim.fn.fnamemodify(markdown, ":r") .. ".ipynb"
+  local cmd = { "jupytext" }
+
+  if vim.fn.filereadable(ipynb) == 1 then
+    table.insert(cmd, "--update")
+  end
+
+  vim.list_extend(cmd, {
+    "--to",
+    "ipynb",
+    "--set-kernel",
+    "python3",
+    "--output",
+    ipynb,
+    markdown,
+  })
+
+  local result = vim.system(cmd, { text = true }):wait()
+  if result.code ~= 0 then
+    local stderr = (result.stderr or ""):gsub("%s+$", "")
+    local stdout = (result.stdout or ""):gsub("%s+$", "")
+    local detail = stderr ~= "" and stderr or stdout
+    if detail == "" then
+      detail = "Unknown jupytext error."
+    end
+    vim.notify("Notebook export failed: " .. detail, vim.log.levels.ERROR)
+    return
+  end
+
+  if vim.fn.exists("*MoltenRunningKernels") == 1 and #vim.fn.MoltenRunningKernels(true) > 0 then
+    local ok, err = pcall(function()
+      vim.api.nvim_cmd({
+        cmd = "MoltenExportOutput",
+        bang = true,
+        args = { ipynb },
+      }, {})
+    end)
+
+    if not ok then
+      vim.notify("Notebook exported, but Molten outputs were not written: " .. err, vim.log.levels.WARN)
+      return
+    end
+  end
+
+  vim.notify("Exported notebook: " .. ipynb, vim.log.levels.INFO)
+end
+
+local function export_notebook_to_markdown()
+  local ipynb = vim.api.nvim_buf_get_name(0)
+  if ipynb == "" then
+    vim.notify("No file is associated with this buffer.", vim.log.levels.WARN)
+    return
+  end
+
+  if not ipynb:match("%.ipynb$") then
+    vim.notify("This import binding only works from jupyter notebook files.", vim.log.levels.WARN)
+    return
+  end
+
+  if vim.fn.executable("jupytext") ~= 1 then
+    vim.notify("jupytext is not available on PATH.", vim.log.levels.ERROR)
+    return
+  end
+
+  if vim.bo.modified then
+    vim.cmd("write")
+  end
+
+  ipynb = vim.fn.resolve(vim.fn.expand(ipynb))
+  local markdown = vim.fn.fnamemodify(ipynb, ":r") .. ".md"
+  local cmd = {
+    "jupytext",
+    "--to",
+    "md:markdown",
+    "--output",
+    markdown,
+    ipynb,
+  }
+
+  local result = vim.system(cmd, { text = true }):wait()
+  if result.code ~= 0 then
+    local stderr = (result.stderr or ""):gsub("%s+$", "")
+    local stdout = (result.stdout or ""):gsub("%s+$", "")
+    local detail = stderr ~= "" and stderr or stdout
+    if detail == "" then
+      detail = "Unknown jupytext error."
+    end
+    vim.notify("Markdown export failed: " .. detail, vim.log.levels.ERROR)
+    return
+  end
+
+  vim.notify("Exported markdown: " .. markdown, vim.log.levels.INFO)
+end
+
 vim.keymap.set("n", "<localleader>=", insert_python_cell,
   { silent = true, desc = "Insert ```python cell" })
 vim.keymap.set("n", "<localleader>-", clear_current_cell_output,
   { silent = true, desc = "Clear current cell output" })
 vim.keymap.set("n", "<localleader>d", delete_current_fenced_cell,
   { silent = true, desc = "Delete current fenced cell" })
+vim.keymap.set("n", "<localleader>w", export_markdown_to_notebook,
+  { silent = true, desc = "Export markdown file to ipynb" })
+vim.keymap.set("n", "<localleader>i", export_notebook_to_markdown,
+  { silent = true, desc = "Export notebook to markdown file" })
 
 -- km("n", "``", "za")
 

@@ -18,6 +18,10 @@ return {
   -- "miikanissi/modus-themes.nvim",
   -- "rebelot/kanagawa.nvim",
   { "gremble0/yellowbeans.nvim" },
+  {
+    "webhooked/kanso.nvim",
+    lazy = false,
+  },
   { "blazkowolf/gruber-darker.nvim" },
   -- "rockyzhang24/arctic.nvim",
   { "folke/tokyonight.nvim" },
@@ -57,13 +61,13 @@ return {
   {
     "metalelf0/jellybeans-nvim",
     dependencies = {
-       'rktjmp/lush.nvim',
+      'rktjmp/lush.nvim',
     }
   },
 
   { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
 
-  {"tiagovla/tokyodark.nvim"},
+  { "tiagovla/tokyodark.nvim" },
 
   -- {
   --   "zenbones-theme/zenbones.nvim",
