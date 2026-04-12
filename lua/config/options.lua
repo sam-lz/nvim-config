@@ -83,6 +83,8 @@ vim.schedule(function()
     vim.o.clipboard = "unnamedplus"
 end)
 
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
 vim.o.scrolloff = 999     -- 15
 
 -- place cursor where there is no text
