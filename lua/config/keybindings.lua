@@ -23,7 +23,6 @@ vim.keymap.set('n', 'cd', function()
 end,
 { desc = 'cd to current file dir'})
 
--- km({"n", "v"}, "")
 
 
 vim.keymap.set('n', "<localleader>t", ":TypstPreview<CR>")
@@ -619,6 +618,44 @@ vim.keymap.set('n', '<tab>', '<C-^>')
 
 -- km("n", "w", "<cmd>ToggleTerm<CR>", { silent = true, nowait = true })
 km("n", "<C-e>", "<cmd>TermSelect<CR>", { silent = true, nowait = true })
+
+-- km({"n", "v"}, "'", "w")
+
+-- local tt = require("toggleterm.terminal")
+
+-- local function toggle_last_or_count()
+--   if vim.v.count > 0 then
+--     vim.cmd(vim.v.count .. "ToggleTerm")
+--     return
+--   end
+
+--   local term = tt.get_last_focused()
+--   if term then
+--     term:toggle()
+--     return
+--   end
+
+--   local all = tt.get_all()
+--   if #all > 0 then
+    -- all[1]:toggle()
+  -- else
+  --   vim.cmd("TermNew")
+  -- end
+-- end
+
+-- require("toggleterm").setup({
+--   open_mapping = nil,
+--   insert_mappings = false,
+--   terminal_mappings = false,
+-- })
+
+-- vim.keymap.set("n", "w", toggle_last_or_count, { silent = true, desc = "Toggle last terminal" })
+-- vim.keymap.set("n", "<leader>tn", "<cmd>TermNew<CR>",    { silent = true, desc = "New terminal" })
+-- vim.keymap.set("n", "<leader>ts", "<cmd>TermSelect<CR>", { silent = true, desc = "Select terminal" })
+
+
+
+
 
 
 for _,m in ipairs({'n','v','x','o','i','c','t','s'}) do for _,km in ipairs(vim.api.nvim_get_keymap(m)) do if (km.lhs or ''):sub(1,1) == 'q' then pcall(vim.keymap.del, m, km.lhs) end end end
