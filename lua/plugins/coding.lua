@@ -287,15 +287,18 @@ return {
       require("toggleterm").setup({
         start_in_insert = false,
         autochdir = true,
+        insert_mappings = false,
         direction = 'horizontal',
+        open_mapping = [[w]],
+        persist_size = true,
         float_opts = {
-          border = 'shadow',
-          width = function()
-            return vim.o.columns
-          end,
-          height = function()
-            return vim.o.lines
-          end,
+          -- border = 'shadow',
+          -- width = function()
+          --   return vim.o.columns
+          -- end,
+          -- height = function()
+          --   return vim.o.lines
+          -- end,
         },
       })
     end

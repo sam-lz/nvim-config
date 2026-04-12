@@ -23,6 +23,8 @@ vim.keymap.set('n', 'cd', function()
 end,
 { desc = 'cd to current file dir'})
 
+-- km({"n", "v"}, "")
+
 
 vim.keymap.set('n', "<localleader>t", ":TypstPreview<CR>")
 vim.keymap.set('n', "<localleader>o", ":Outline<CR>")
@@ -444,16 +446,23 @@ vim.keymap.set("n", "<leader>=", "<C-w>v", { desc = "Split window vertically" })
 vim.keymap.set("n", "<leader>d", ":bdelete<CR>", { silent = true })
 
 -- tabs
-vim.keymap.set("n", "tn", ":tabnew<CR>", { silent = true })
-vim.keymap.set("n", "td", ":tabclose<CR>", { silent = true })
-vim.keymap.set("n", "tl", ":tabnext<CR>", { silent = true })
-vim.keymap.set("n", "th", ":tabprevious<CR>", { silent = true })
+-- vim.keymap.set("n", "tn", ":tabnew<CR>", { silent = true })
+-- vim.keymap.set("n", "td", ":tabclose<CR>", { silent = true })
+-- vim.keymap.set("n", "tl", ":tabnext<CR>", { silent = true })
+-- vim.keymap.set("n", "th", ":tabprevious<CR>", { silent = true })
 vim.keymap.set("n", "tH", ":-tabmove<CR>", { silent = true })
 vim.keymap.set("n", "tL", ":+tabmove<CR>", { silent = true })
 
+-- vim.keymap.set("n", "<C-Tab>", ":tabnext<CR>", { silent = true, desc = "Next tab" })
+-- vim.keymap.set("n", "<C-S-Tab>", ":tabprevious<CR>", { silent = true, desc = "Previous tab" })
+
+vim.keymap.set("n", "<C-q>", ":tabclose<CR>", { silent = true })
 vim.keymap.set("n", "<C-n>", ":tabnew<CR>", { silent = true })
--- vim.keymap.set("n", "<C-l>", ":tabnext<CR>", { silent = true })
--- vim.keymap.set("n", "<C-h>", ":tabprevious<CR>", { silent = true })
+vim.keymap.set("n", "<C-l>", ":tabnext<CR>", { silent = true })
+vim.keymap.set("n", "<C-h>", ":tabprevious<CR>", { silent = true })
+
+vim.keymap.set("n", "<S-C-l>", ":-tabmove<CR>", { silent = true })
+vim.keymap.set("n", "<S-C-h>", ":+tabmove<CR>", { silent = true })
 
 
 vim.keymap.set('n', 'tt', function()
@@ -606,7 +615,10 @@ km("n", [['']], "<Nop>", { silent = true, nowait = true })
 
 vim.keymap.set('n', '<tab>', '<C-^>')
 -- km("n", "`", "<cmd>ToggleTerm<CR>", { silent = true, nowait = true })
-km("n", "'", "<cmd>ToggleTerm<CR>", { silent = true, nowait = true })
+-- km("n", "'", "<cmd>ToggleTerm<CR>", { silent = true, nowait = true })
+
+-- km("n", "w", "<cmd>ToggleTerm<CR>", { silent = true, nowait = true })
+km("n", "<C-e>", "<cmd>TermSelect<CR>", { silent = true, nowait = true })
 
 
 for _,m in ipairs({'n','v','x','o','i','c','t','s'}) do for _,km in ipairs(vim.api.nvim_get_keymap(m)) do if (km.lhs or ''):sub(1,1) == 'q' then pcall(vim.keymap.del, m, km.lhs) end end end
