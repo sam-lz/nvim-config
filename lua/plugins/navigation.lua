@@ -211,7 +211,7 @@ return {
           layout_config = {
             vertical = {
               -- prompt_position = "top",
-              width = { padding = 5 },
+              width = { padding = 2 },
               height = { padding = 2 },
               -- width = { padding = 0 },
               -- height = { padding = 0 },
