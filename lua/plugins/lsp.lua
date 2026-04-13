@@ -16,7 +16,7 @@ return {
       config = function()
         require("mason-lspconfig").setup()
         require("mason-lspconfig").setup {
-          ensure_installed = { "clangd", "pyright", "lua_ls" },
+          ensure_installed = { "clangd", "pyright", "lua_ls", "tinymist" },
           handlers = {
             function(server_name)
               require("lspconfig")[server_name].setup({})
