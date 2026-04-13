@@ -143,7 +143,7 @@ return {
           results_title         = "",
           preview_title         = "",
           dynamic_preview_title = false,
-          border                = false,
+          border                = true,
           layout_strategy       = "vertical",
           mappings              = {
             i = {
@@ -211,10 +211,10 @@ return {
           layout_config = {
             vertical = {
               -- prompt_position = "top",
-              -- width = { padding = 10 },
-              -- height = { padding = 5 },
-              width = { padding = 0 },
-              height = { padding = 0 },
+              width = { padding = 5 },
+              height = { padding = 2 },
+              -- width = { padding = 0 },
+              -- height = { padding = 0 },
             },
             -- horizontal = {
             --     width = {padding = 0},
