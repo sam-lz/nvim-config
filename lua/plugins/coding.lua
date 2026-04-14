@@ -305,7 +305,7 @@ return {
         autochdir = true,
         insert_mappings = false,
         direction = 'horizontal',
-        open_mapping = [[w]],
+        open_mapping = [[<C-;>]],
         persist_size = true,
         float_opts = {
           -- border = 'shadow',
