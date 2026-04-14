@@ -304,8 +304,9 @@ return {
         start_in_insert = false,
         autochdir = true,
         insert_mappings = false,
+        terminal_mappings = false,
         direction = 'horizontal',
-        open_mapping = [[<C-;>]],
+        open_mapping = [[w]],
         persist_size = true,
         float_opts = {
           -- border = 'shadow',
