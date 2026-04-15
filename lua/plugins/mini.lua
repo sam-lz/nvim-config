@@ -46,6 +46,9 @@ return {
           { mode = 'n', keys = '<Leader>' },
           { mode = 'x', keys = '<Leader>' },
 
+          { mode = 'n', keys = '<localleader>'},
+          { mode = 'x', keys = '<localleader>'},
+
           -- Built-in completion
           { mode = 'i', keys = '<C-x>' },
 

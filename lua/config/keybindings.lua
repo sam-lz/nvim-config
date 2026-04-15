@@ -25,8 +25,8 @@ end,
 
 
 
-vim.keymap.set('n', "<localleader>t", ":TypstPreview<CR>")
-vim.keymap.set('n', "<localleader>o", ":Outline<CR>")
+vim.keymap.set('n', "<localleader>t", ":TypstPreview<CR>", {desc = "TypstPreview"})
+vim.keymap.set('n', "<localleader>o", ":Outline<CR>", {desc = "Show outline"})
 
 
 -- vim.keymap.set("n", "<localleader>mi", ":MoltenInit<CR>",
