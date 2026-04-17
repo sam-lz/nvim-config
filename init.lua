@@ -4,7 +4,7 @@ require("config.keybindings")
 
 vim.opt.signcolumn = "no"
 
-vim.cmd.colorscheme("vague")
+vim.cmd.colorscheme("kanso-zen")
 
 -- flexoki-dark
 -- yellowbeans

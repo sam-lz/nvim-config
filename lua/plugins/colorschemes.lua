@@ -21,6 +21,14 @@ return {
   {
     "webhooked/kanso.nvim",
     lazy = false,
+    config = function()
+      require('kanso').setup({
+        transparent = false,
+        foreground = {
+          dark = "saturated"
+        }
+      })
+    end,
   },
   { "blazkowolf/gruber-darker.nvim" },
   -- "rockyzhang24/arctic.nvim",
