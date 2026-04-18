@@ -112,6 +112,14 @@ return {
             ghost_text = {
               enabled = false,
             },
+            preview = {
+              positions = {
+                east = 1,
+                west = 2,
+                north = vim.NIL,
+                south = vim.NIL,
+              },
+            },
           },
           -- vim.api.nvim_set_keymap('i', '<Esc>', [[pumvisible() ? "\<C-e><Esc>" : "\<Esc>"]], { expr = true, silent = true }),
           vim.api.nvim_set_keymap('i', '<C-c>', [[pumvisible() ? "\<C-e><C-c>" : "\<C-c>"]], { expr = true, silent = true }),
