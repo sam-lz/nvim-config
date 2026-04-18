@@ -126,11 +126,18 @@ return {
 
   {
     'nvim-telescope/telescope.nvim',
-    -- tag = '0.1.9',
-    branch = '0.1.x',
+    version = '*',
     dependencies = { 'nvim-lua/plenary.nvim' },
 
     config = function()
+      local ok_ts_parsers, ts_parsers = pcall(require, "nvim-treesitter.parsers")
+      local ts_lang = vim.treesitter and vim.treesitter.language
+      if ok_ts_parsers and type(ts_parsers.ft_to_lang) ~= "function" and ts_lang and type(ts_lang.get_lang) == "function" then
+        ts_parsers.ft_to_lang = function(ft)
+          return ts_lang.get_lang(ft) or ft
+        end
+      end
+
       local z_utils = require("telescope._extensions.zoxide.utils")
       local no_titles = {
         prompt_title  = "",

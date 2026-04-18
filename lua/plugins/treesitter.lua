@@ -1,90 +1,145 @@
----@diagnostic disable: missing-fields
+local ensure_installed = {
+  "bash",
+  "c",
+  "cpp",
+  "css",
+  "go",
+  "html",
+  "java",
+  "javascript",
+  "json",
+  "latex",
+  "lua",
+  "make",
+  "markdown",
+  "markdown_inline",
+  "php",
+  "python",
+  "query",
+  "ruby",
+  "rust",
+  "sql",
+  "toml",
+  "typescript",
+  "vim",
+  "vimdoc",
+  "yaml",
+}
+
+local parser_install_dir = vim.fn.stdpath("data") .. "/site"
+
+local function set_textobject_keymaps()
+  local select = require("nvim-treesitter-textobjects.select")
+
+  vim.keymap.set({ "x", "o" }, "af", function()
+    select.select_textobject("@function.outer", "textobjects")
+  end, { desc = "Select around function" })
+  vim.keymap.set({ "x", "o" }, "if", function()
+    select.select_textobject("@function.inner", "textobjects")
+  end, { desc = "Select inside function" })
+  vim.keymap.set({ "x", "o" }, "ac", function()
+    select.select_textobject("@class.outer", "textobjects")
+  end, { desc = "Select around class" })
+  vim.keymap.set({ "x", "o" }, "ic", function()
+    select.select_textobject("@class.inner", "textobjects")
+  end, { desc = "Select inner part of a class region" })
+  vim.keymap.set({ "x", "o" }, "as", function()
+    select.select_textobject("@local.scope", "locals")
+  end, { desc = "Select language scope" })
+end
+
 return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    lazy = false,
+    build = ":TSUpdate",
+    config = function()
+      local ok_main, treesitter = pcall(require, "nvim-treesitter")
+      if ok_main and type(treesitter.setup) == "function" and type(treesitter.install) == "function" then
+        treesitter.setup({
+          install_dir = parser_install_dir,
+        })
+        treesitter.install(ensure_installed)
 
-  -- installing nvim-treesitter, all commands prefixed with "TS"
-    -- view AST with "InspectTree"
-    {
-        "nvim-treesitter/nvim-treesitter",
-        config = function()
-            require'nvim-treesitter.configs'.setup {
-                ensure_installed = {
-                    "c", "cpp", "lua", "python", "bash", "make", "html", "toml", "query",
-                    "css", "javascript", "markdown", "markdown_inline", "typescript",
-                    "yaml", "json", "vim", "vimdoc", "rust", "java", "go", "php", "ruby",
-                    "latex", "sql",
+        local group = vim.api.nvim_create_augroup("TreesitterStart", { clear = true })
+        vim.api.nvim_create_autocmd("FileType", {
+          group = group,
+          callback = function(args)
+            pcall(vim.treesitter.start, args.buf)
+          end,
+        })
 
-                },
-                auto_install = true,
+        return
+      end
 
-                highlight = {
-                    enable = true,
-                },
-                incremental_selection = {
-                    enable = true,
-                    keymaps = {
-                        init_selection = "ss",
-                        node_incremental = "oo",
-                        node_decremental = "ii",
-                        scope_incremental = "ss",
-                    },
-                },
-                -- treesitter textobjects
-                textobjects = {
-                    select = {
-                        enable = true,
+      local ok_legacy, configs = pcall(require, "nvim-treesitter.configs")
+      if not ok_legacy then
+        return
+      end
 
-                        -- Automatically jump forward to textobj, similar to targets.vim
-                        lookahead = true,
-
-                        keymaps = {
-                        -- You can use the capture groups defined in textobjects.scm
-                         ["af"] = "@function.outer",
-                          ["if"] = "@function.inner",
-                         ["ac"] = "@class.outer",
-                   -- You can optionally set descriptions to the mappings (used in the desc parameter of
-                    -- nvim_buf_set_keymap) which plugins like which-key display
-                 ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-                 -- You can also use captures from other query groups like `locals.scm`
-                  ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
-                },
-                 -- You can choose the select mode (default is charwise 'v')
-                  --
-                  -- Can also be a function which gets passed a table with the keys
-                  -- * query_string: eg '@function.inner'
-                  -- * method: eg 'v' or 'o'
-                  -- and should return the mode ('v', 'V', or '<c-v>') or a table
-                  -- mapping query_strings to modes.
-                  selection_modes = {
-                  ['@parameter.outer'] = 'v', -- charwise
-                  ['@function.outer'] = 'V', -- linewise
-                  ['@class.outer'] = '<c-v>', -- blockwise
-                },
-                -- If you set this to `true` (default is `false`) then any textobject is
-                -- extended to include preceding or succeeding whitespace. Succeeding
-                -- whitespace has priority in order to act similarly to eg the built-in
-               -- `ap`.
-               --
-               -- Can also be a function which gets passed a table with the keys
-               -- * query_string: eg '@function.inner'
-               -- * selection_mode: eg 'v'
-               -- and should return true or false
-               include_surrounding_whitespace = true,
-             },
+      configs.setup({
+        ensure_installed = ensure_installed,
+        auto_install = true,
+        parser_install_dir = parser_install_dir,
+        highlight = {
+          enable = true,
+        },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = "ss",
+            node_incremental = "oo",
+            node_decremental = "ii",
+            scope_incremental = "ss",
+          },
+        },
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+              ["af"] = "@function.outer",
+              ["if"] = "@function.inner",
+              ["ac"] = "@class.outer",
+              ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+              ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
             },
+            selection_modes = {
+              ["@parameter.outer"] = "v",
+              ["@function.outer"] = "V",
+              ["@class.outer"] = "<c-v>",
+            },
+            include_surrounding_whitespace = true,
+          },
+        },
+      })
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
+    lazy = false,
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      local ok, textobjects = pcall(require, "nvim-treesitter-textobjects")
+      if not ok or type(textobjects.setup) ~= "function" then
+        return
+      end
 
+      textobjects.setup({
+        select = {
+          lookahead = true,
+          selection_modes = {
+            ["@parameter.outer"] = "v",
+            ["@function.outer"] = "V",
+            ["@class.outer"] = "<c-v>",
+          },
+          include_surrounding_whitespace = true,
+        },
+      })
 
-            }
-        end,
-    },        -- the code block for nvim-treesitter ends here
-
-
-
-    -- treesitter textobjects
-    {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-    },
-
-
-
-
+      set_textobject_keymaps()
+    end,
+  },
 }
