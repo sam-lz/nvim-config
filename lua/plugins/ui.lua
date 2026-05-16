@@ -7,7 +7,8 @@ return {
         icons_enabled = false,
         theme = 'auto',
         component_separators = { left = '|', right = '|' },
-        section_separators = { left = '', right = '' },
+        -- section_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
         refresh = {
           statusline = 100,
           tabline    = 100,
@@ -20,6 +21,7 @@ return {
         },
         lualine_b = {
           -- {'branch'},
+          -- {'diagnostics'},
 
         },
         -- 'diff', 'diagnostics',
